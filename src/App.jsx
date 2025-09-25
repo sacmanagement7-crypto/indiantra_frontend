@@ -11,6 +11,9 @@ import AuthPage from './pages/AuthPage'
 import ShopPage from './pages/ShopPage'
 import AboutPage from './pages/AboutPage'
 import SellerLogin from './pages/SellerLogin'
+import Test from './pages/Test'
+import ProductDetails from './pages/ProductDetails'
+import CartPage from './pages/CartPage'
 
 const App = () => {
   return (
@@ -24,6 +27,10 @@ const App = () => {
         <Route path='/shop' element={<ShopPage/>}/>
         <Route path='/about' element={<AboutPage/>}/>
         <Route path='/seller-login' element={<SellerLogin/>}/>
+        <Route path='/test' element={<Test/>}/>
+        <Route path='/product/:id' element={<ProductDetails/>}/>
+        <Route path='*' element={<NotFound/>}/>
+        <Route path='/cart' element={<CartPage/>}/>
        </Routes>
        <Footer/>
 

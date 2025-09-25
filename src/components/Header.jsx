@@ -1,120 +1,237 @@
 import React, { useState } from "react";
-import { FaSyncAlt, FaHeart, FaShoppingBag, FaUser } from "react-icons/fa";
+import { FaSyncAlt, FaHeart, FaShoppingBag, FaUser, FaBars, FaTimes } from "react-icons/fa";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import { NavLink } from "react-router";
-import logo from "../assets/logo.png"
+import { NavLink, useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import logo from "../assets/logo.png";
+import { ShopContext } from "../context/ShopContext";
+import { useEffect } from "react";
 
 export default function Header() {
-    // Example categories (can be fetched from API instead)
-    const categories = [
-        "All Categories",
-        "Clothing",
-        "Handmade",
-        "Home Decor",
-        "Groceries",
-        "Ayurvedic Products",
-    ];
-
-    const [user, setUser] = useState(null)
-    const [isLogin, setIsLogin] = useState(true);
-    const [open, setOpen] = useState(false);
-
-    return (
-        <header className="w-full font-sans text-sm text-gray-700">
-
-            {/* 🔹 Middle Section */}
-            <div className="flex items-center justify-between px-8 py-5 ">
-                {/* Logo */}
-                <NavLink to="/">
-                    <div className="flex items-center">
-                        <img src={logo} alt="Logo" className="h-[55px] w-auto" />
-                    </div>
-                </NavLink>
-
-                {/* Search */}
-                <div className="flex w-1/2 border border-gray-200">
-                    <input
-                        type="text"
-                        placeholder="Search Product..."
-                        className="flex-1 px-3 py-2 outline-none text-gray-600 placeholder-gray-400"
-                    />
+  const { categories, products, cart } = useContext(ShopContext);
+  const [open, setOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [catOpen, setCatOpen] = useState(false);
+  const [user, setUser] = useState(null);
 
 
-                    <select className="border-l px-3 py-2 outline-none text-gray-600">
-                        {categories.map((category, index) => (
-                            <option key={index} value={category}>
-                                {category}
-                            </option>
-                        ))}
-                    </select>
+  const [searchText, setSearchText] = useState("");
 
-                    <button className="bg-yellow-500 px-5 text-white font-medium">
-                        Search
-                    </button>
-                </div>
+  const navigate = useNavigate();
 
-                {/* Icons */}
-                <div className="flex items-center space-x-6 text-lg">
-                    <div className="relative cursor-pointer">
-                        <FaSyncAlt className="text-gray-700" />
-                        {/* <span className="absolute -top-2 -right-3 bg-[#ffb938] text-white text-xs w-5 h-5 flex items-center justify-center rounded-full"></span> */}
-                    </div>
-                    <div className="relative cursor-pointer">
-                        <FaHeart className="text-gray-700" />
-                        {/* <span className="absolute -top-2 -right-3 bg-[#ffb938] text-white text-xs w-5 h-5 flex items-center justify-center rounded-full"></span> */}
-                    </div>
-                    <div className="relative cursor-pointer">
-                        <FaShoppingBag className="text-gray-700" />
-                        {/* <span className="absolute -top-2 -right-3 bg-[#ffb938] text-white text-xs w-5 h-5 flex items-center justify-center rounded-full"></span> */}
-                    </div>
-                    <FaUser className="text-gray-700 cursor-pointer" onClick={() => setOpen(!open)} />
-                    {
-                        open && (
-                            <div className="absolute top-[66px] right-[40px] mt-3 w-48 rounded-2xl border border-gray-200 bg-white shadow-lg shadow-gray-200/50 ring-1 ring-black/5">
-                                <div className="py-2">
-                                    <button className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors">
-                                        {
-                                            isLogin ? (
-                                                <NavLink>MyAccount</NavLink>
-                                            ) :
-                                                <NavLink to={'/auth'}>Login/Register</NavLink>
-                                        }
-                                    </button>
-                                    <button className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 transition-colors">
-                                        Settings
-                                    </button>
-                                    <button className="block w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors">
-                                        Logout
-                                    </button>
-                                </div>
-                            </div>
-                        )
-                    }
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
 
-                </div>
+  }, []);
+
+  const handleSearch = () => {
+    if (!searchText.trim()) return;
+    const match = products.find((p) => {
+      if (p.name == searchText) {
+        return p
+      } else {
+        return undefined
+      }
+    })
+
+    if (match) {
+      navigate(`/product/${match.id}`)
+      setSearchText("");
+    } else {
+      alert("❌ No product found!");
+    }
+  }
+  console.log(user);
+
+  const handleLogout = () => {
+    localStorage.removeItem("user");
+    setUser(null);
+    setMessage("👋 Logged out");
+  };
+  return (
+    <header className="w-full font-sans text-sm text-gray-700 border-b">
+      {/* 🔹 Middle Section */}
+      <div className="flex items-center justify-between px-4 lg:px-8 py-4">
+        {/* Logo */}
+        <NavLink to="/">
+          <div className="flex items-center">
+            <img src={logo} alt="Logo" className="h-[45px] lg:h-[55px] w-auto mb-3" />
+          </div>
+        </NavLink>
+
+        {/* 🔍 Search (hidden on mobile + tablet) */}
+        <div className="hidden lg:flex w-1/2 border border-gray-200">
+          <input
+            type="text"
+            placeholder="Search Product..."
+            value={searchText}
+            className="flex-1 px-3 py-2 outline-none text-gray-600 placeholder-gray-400"
+            onChange={(e) => {
+              setSearchText(e.target.value)
+              console.log(e.target.value)
+            }}
+            onKeyDown={(e) => e.key === "Enter" && handleSearch()}
+          />
+
+          <select className="border-l px-3 py-2 outline-none text-gray-600">
+            {categories.map((category, index) => (
+              <option key={index} value={category}>
+                {category}
+              </option>
+            ))}
+          </select>
+
+          <button onClick={() => setSearchText(searchText)} className="bg-yellow-500 px-5 text-white font-medium">
+            Search
+          </button>
+        </div>
+
+        {/* Icons */}
+        <div className="flex items-center space-x-4 lg:space-x-6 text-lg">
+          <FaHeart className="cursor-pointer" />
+          <div className="relative">
+            <FaShoppingBag className="cursor-pointer" />
+            {cart.length > 0 && (
+              <span className="absolute -top-3 -right-3 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                {cart.reduce((sum, item) => sum + item.qty, 0)}
+              </span>
+            )}
+          </div>
+          <FaUser
+            className="cursor-pointer"
+            onClick={() => setOpen(!open)}
+          />
+
+          {/* Mobile + Tablet Hamburger */}
+          <button
+            className="lg:hidden text-xl"
+            onClick={() => setMenuOpen(!menuOpen)}
+          >
+            {menuOpen ? <FaTimes /> : <FaBars />}
+          </button>
+
+          {/* User Dropdown */}
+          {open && (
+            <div className="absolute top-[70px] right-4 mt-3 w-48 z-10 rounded-2xl border border-gray-200 bg-white shadow-lg shadow-gray-200/50 ring-1 ring-black/5">
+              <div className="py-2">
+                <button className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                  {user ? (
+                    <NavLink to="/account">My Account</NavLink>
+                  ) : (
+                    <NavLink to="/auth">Login/Register</NavLink>
+                  )}
+                </button>
+                <button className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+                  Settings
+                </button>
+                <button onClick={() => {
+                  handleLogout()
+                }} className="block w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50">
+                  Logout
+                </button>
+              </div>
             </div>
+          )}
+        </div>
+      </div>
 
-            {/* 🔹 Bottom Nav */}
-            <nav className="flex items-center justify-between bg-[#ffb938] px-8 py-3 text-gray-800">
-                <div className="flex items-center space-x-6 font-medium">
-                    <button className="flex items-center space-x-2">
-                        <span className="text-lg">☰</span>
-                        <span>All Categories</span>
-                    </button>
-                    <NavLink to='/' className="hover:text-white transition" >Homepage</NavLink>
-                    <NavLink to='/shop' className="hover:text-white transition" >Shop</NavLink>
-                    <NavLink to='/pages' className="hover:text-white transition" >Pages</NavLink>
-                    <NavLink to='/about' className="hover:text-white transition" >About</NavLink>
-                    <NavLink to='/blog' className="hover:text-white transition" >Blog</NavLink>
-                    <NavLink to='/contact' className="hover:text-white transition" >Contact</NavLink>
-                </div>
+      {/* 🔹 Bottom Nav */}
+      <nav className="hidden lg:flex items-center justify-between bg-[#ffb938] px-8 py-3 text-gray-800 relative">
+        <div className="flex items-center space-x-6 font-medium relative">
+          {/* All Categories Button */}
+          <button
+            className="flex items-center space-x-2 relative"
+            onClick={() => setCatOpen(!catOpen)}
+          >
+            <span className="text-lg">☰</span>
+            <span>All Categories</span>
+          </button>
 
-                <NavLink to={'/seller-login'}>
-                    <button className="bg-black text-white px-5 py-2 flex items-center font-medium">
-                        Become a Seller <MdKeyboardArrowRight className="ml-1 text-lg" />
-                    </button>
-                </NavLink>
-            </nav>
-        </header>
-    );
+          {/* Categories Dropdown */}
+          {catOpen && (
+            <div className="fixed top-0 left-0 w-72 h-full bg-white shadow-lg z-50 overflow-y-auto">
+              {/* Header */}
+              <div className="flex items-center justify-between p-4 border-b">
+                <h2 className="font-semibold text-lg">Hello, sign in</h2>
+                <FaTimes
+                  className="cursor-pointer text-xl"
+                  onClick={() => setCatOpen(false)}
+                />
+              </div>
+
+              {/* Categories */}
+              <ul className="p-4 space-y-3">
+                {categories.map((cat, idx) => (
+                  <li
+                    key={idx}
+                    className="flex justify-between items-center py-2 px-2 hover:bg-gray-100 rounded cursor-pointer"
+                  >
+                    <NavLink
+                      to={`/shop?category=${cat}`}
+                      onClick={() => setCatOpen(false)}
+                      className="w-full"
+                    >
+                      {cat}
+                    </NavLink>
+                    <MdKeyboardArrowRight />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <NavLink to="/" className="hover:text-white transition">
+            Homepage
+          </NavLink>
+          <NavLink to="/shop" className="hover:text-white transition">
+            Shop
+          </NavLink>
+          <NavLink to="/about" className="hover:text-white transition">
+            About
+          </NavLink>
+          <NavLink to="/blog" className="hover:text-white transition">
+            Blog
+          </NavLink>
+          <NavLink to="/contact" className="hover:text-white transition">
+            Contact
+          </NavLink>
+        </div>
+
+        <NavLink to="/seller-login">
+          <button className="bg-black text-white px-5 py-2 flex items-center font-medium">
+            Become a Seller <MdKeyboardArrowRight className="ml-1 text-lg" />
+          </button>
+        </NavLink>
+      </nav>
+
+      {/* 🔹 Mobile + Tablet Dropdown Menu */}
+      {menuOpen && (
+        <div className="lg:hidden bg-[#ffb938] px-6 py-4 space-y-4 text-gray-800 font-medium">
+          <NavLink to="/" className="block hover:text-white transition">
+            Homepage
+          </NavLink>
+          <NavLink to="/shop" className="block hover:text-white transition">
+            Shop
+          </NavLink>
+          <NavLink to="/about" className="block hover:text-white transition">
+            About
+          </NavLink>
+          <NavLink to="/blog" className="block hover:text-white transition">
+            Blog
+          </NavLink>
+          <NavLink to="/contact" className="block hover:text-white transition">
+            Contact
+          </NavLink>
+          <NavLink to="/seller-login">
+            <button className="w-full bg-black text-white px-5 py-2 flex items-center justify-center font-medium">
+              Become a Seller <MdKeyboardArrowRight className="ml-1 text-lg" />
+            </button>
+          </NavLink>
+        </div>
+      )}
+    </header>
+  );
 }
