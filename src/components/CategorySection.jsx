@@ -1,57 +1,71 @@
-import Clothing from "../assets/Clothing.png"
-import Grocery from "../assets/Grocery.png"
-import Herbal from "../assets/Herbal.png"
-import Handicrafts from "../assets/Handicrafts.png"
-import jwelery from "../assets/jwelery.png"
-import Home from "../assets/Home.png"
-const categories = [
-  {
-    id: 1,
-    image: `${Clothing}`, // adjust path
-  },
-  {
-    id: 2,
-    image: `${Grocery}`,
-  },
-  {
-    id: 3,
-    image: `${Herbal}`,
-  },
-  {
-    id: 4,
-    image: `${Handicrafts}`,
-  },
-  {
-    id: 5,
-    image: `${Home}`,
-  },
-  {
-    id: 6,
-    image: `${jwelery}`,
-  },
-];
+import { useContext } from "react";
+import { ShopContext } from "../context/ShopContext";
+import { useNavigate } from "react-router-dom";
+
+// Swiper
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import { Navigation } from "swiper/modules";
 
 export default function CategorySection() {
+  const { categories = [] } = useContext(ShopContext);
+  const navigate = useNavigate();
+
+  const slidesPerViewDefault = Math.min(categories.length || 1, 6);
+  const sp320 = Math.min(categories.length, 2);
+  const sp640 = Math.min(categories.length, 3);
+  const sp768 = Math.min(categories.length, 4);
+  const sp1024 = Math.min(categories.length, 6);
+
   return (
-    <div className="w-full border-t-2 border-orange-500 py-8">
-      <div className="grid grid-cols-2 md:grid-cols-6 text-center">
+    <div className="w-full border-t-2 border-yellow-500 py-8">
+      <Swiper
+        modules={[Navigation]}
+        spaceBetween={20}
+        slidesPerView={slidesPerViewDefault}
+        navigation
+        breakpoints={{
+          320: { slidesPerView: sp320 },
+          640: { slidesPerView: sp640 },
+          768: { slidesPerView: sp768 },
+          1024: { slidesPerView: sp1024 },
+        }}
+        grabCursor={true}
+        className="custom-swiper"
+      >
         {categories.map((cat) => (
-          <div
-            key={cat.id}
-            className="flex flex-col items-center justify-center space-y-3 cursor-pointer hover:scale-105 transition-transform duration-300"
-          >
-            {/* Fixed square box for alignment */}
-            <div className="flex items-center justify-center w-24 h-24">
-              <img
-                src={cat.image}
-                alt={cat.name}
-                className="max-h-24 max-w-24 object-contain"
-              />
+          <SwiperSlide key={cat.id}>
+            <div
+              onClick={() => navigate(`/shop?category=${cat.name}`)} // 👈 navigate with category
+              className="flex flex-col items-center justify-center text-center cursor-pointer hover:scale-105 transition-transform duration-200"
+            >
+              <div className="flex items-center justify-center w-28 h-28 bg-yellow-50 rounded-full shadow hover:shadow-lg hover:bg-yellow-100 transition">
+                <img
+                  src={cat.image}
+                  alt={cat.name}
+                  className="w-20 h-20 object-contain"
+                />
+              </div>
+              <p className="mt-3 text-sm font-medium text-gray-800">{cat.name}</p>
             </div>
-          </div>
+          </SwiperSlide>
         ))}
-      </div>
+      </Swiper>
+
+      {/* ✅ Custom Swiper Navigation Styling */}
+      <style jsx global>{`
+        .custom-swiper .swiper-button-next,
+        .custom-swiper .swiper-button-prev {
+          color: #facc15; /* Tailwind yellow-400 */
+          transition: all 0.3s ease;
+        }
+        .custom-swiper .swiper-button-next:hover,
+        .custom-swiper .swiper-button-prev:hover {
+          color: #eab308; /* Tailwind yellow-500 on hover */
+          transform: scale(1.2);
+        }
+      `}</style>
     </div>
   );
 }
-

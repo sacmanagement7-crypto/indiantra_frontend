@@ -20,6 +20,11 @@ import Herbal4 from "../assets/Herbal4.png"
 import item1 from "../assets/item1.webp"
 import mitti from "../assets/mitticool-handi.webp"
 import Ghee from "../assets/Ghee.webp"
+import Clothing from "../assets/Clothing.png"
+import Grocery from "../assets/Grocery.png"
+import Handicrafts from "../assets/Handicrafts.png"
+import jwelery from "../assets/jwelery.png"
+import Home from "../assets/Home.png"
 
 export const Products = [
     { id: 1, name: "Handloom Cotton Kurta", price: 999, category: "Clothing", image: `${Shawl}` },
@@ -57,11 +62,40 @@ export const Products = [
     { id: 31, name: "Home Made Ghee", price: 999, category: "Ayurvedic Products", image: `${Ghee}` },
 ]   
 
-export const Categories = [
-    "All",
-    "Clothing",
-    "Handmade",
-    "Home Decor",
-    "Groceries",
-    "Ayurvedic Products",
-]
+
+export const Categories = [{
+    id:1,
+    image:`${Home}`,
+    name:"All"
+},
+  {
+    id: 2,
+    image: `${Clothing}`, 
+    name:"Clothing"// adjust path
+  },
+  {
+    id: 3,
+    image: `${Grocery}`,
+    name:"Groceries"
+  },
+  {
+    id: 4,
+    image: `${Herbal}`,
+    name:"Ayurvedic Products"
+  },
+  {
+    id: 5,
+    image: `${Handicrafts}`,
+    name:"Handmade"
+  },
+  {
+    id: 6,
+    image: `${Home}`,
+    name:"Home Decor"
+  },
+  {
+    id: 7,
+    image: `${jwelery}`,
+    name:"Jwelery"
+  },
+];

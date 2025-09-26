@@ -14,6 +14,7 @@ import SellerLogin from './pages/SellerLogin'
 import Test from './pages/Test'
 import ProductDetails from './pages/ProductDetails'
 import CartPage from './pages/CartPage'
+import WishlistPage from './pages/WishlistPage'
 
 const App = () => {
   return (
@@ -31,6 +32,7 @@ const App = () => {
         <Route path='/product/:id' element={<ProductDetails/>}/>
         <Route path='*' element={<NotFound/>}/>
         <Route path='/cart' element={<CartPage/>}/>
+        <Route path='/wishlist' element={<WishlistPage/>}/>
        </Routes>
        <Footer/>
 

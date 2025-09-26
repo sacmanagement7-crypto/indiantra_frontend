@@ -7,13 +7,21 @@ export function ShopProvider({ children }) {
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
 
+  // 🛒 Cart State (with persistence)
   const [cart, setCart] = useState(() => {
-    // get cart from localStorage (persist cart)
     const stored = localStorage.getItem("cart");
     return stored ? JSON.parse(stored) : [];
   });
 
+  // 💖 Wishlist State (with persistence)
+  const [wishlist, setWishlist] = useState(() => {
+    const stored = localStorage.getItem("wishlist");
+    return stored ? JSON.parse(stored) : [];
+  });
 
+  /* ===========================
+     CART FUNCTIONS
+  =========================== */
 
   // Add to cart
   const addToCart = (product) => {
@@ -29,7 +37,7 @@ export function ShopProvider({ children }) {
   };
 
   // Remove one quantity
- const removeFromCart = (id) => {
+  const removeFromCart = (id) => {
     setCart((prev) =>
       prev
         .map((item) =>
@@ -47,31 +55,65 @@ export function ShopProvider({ children }) {
   // Clear cart
   const clearCart = () => setCart([]);
 
-  // persist cart to localStorage
+  /* ===========================
+     WISHLIST FUNCTIONS
+  =========================== */
+
+  // Add to wishlist
+  const addToWishlist = (product) => {
+    setWishlist((prev) => {
+      const exists = prev.find((item) => item.id === product.id);
+      if (exists) return prev; // already in wishlist
+      return [...prev, product];
+    });
+  };
+
+  // Remove from wishlist
+  const removeFromWishlist = (id) => {
+    setWishlist((prev) => prev.filter((item) => item.id !== id));
+  };
+
+  // Clear wishlist
+  const clearWishlist = () => setWishlist([]);
+
+  /* ===========================
+     LOCAL STORAGE PERSISTENCE
+  =========================== */
   useEffect(() => {
     localStorage.setItem("cart", JSON.stringify(cart));
   }, [cart]);
 
   useEffect(() => {
-    async function fetchData() {
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+  }, [wishlist]);
 
+  /* ===========================
+     FETCH DATA
+  =========================== */
+  useEffect(() => {
+    async function fetchData() {
       setCategories(Categories);
       setProducts(Products);
     }
-
     fetchData();
   }, []);
 
   return (
-    <ShopContext.Provider value={{
-      categories, 
-      products, 
-      cart,
-      addToCart,
-      removeFromCart,
-      deleteFromCart,
-      clearCart
-    }}>
+    <ShopContext.Provider
+      value={{
+        categories,
+        products,
+        cart,
+        wishlist,
+        addToCart,
+        removeFromCart,
+        deleteFromCart,
+        clearCart,
+        addToWishlist,
+        removeFromWishlist,
+        clearWishlist,
+      }}
+    >
       {children}
     </ShopContext.Provider>
   );

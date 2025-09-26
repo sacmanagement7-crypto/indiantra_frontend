@@ -8,7 +8,7 @@ import { ShopContext } from "../context/ShopContext";
 import { useEffect } from "react";
 
 export default function Header() {
-  const { categories, products, cart } = useContext(ShopContext);
+  const { categories,products, cart,wishlist } = useContext(ShopContext);
   const [open, setOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [catOpen, setCatOpen] = useState(false);
@@ -79,21 +79,29 @@ export default function Header() {
           <select className="border-l px-3 py-2 outline-none text-gray-600">
             {categories.map((category, index) => (
               <option key={index} value={category}>
-                {category}
+                {category.name}
               </option>
             ))}
           </select>
 
-          <button onClick={() => setSearchText(searchText)} className="bg-yellow-500 px-5 text-white font-medium">
+          <button onClick={() => handleSearch()} className="bg-yellow-500 px-5 text-white font-medium">
             Search
           </button>
         </div>
 
         {/* Icons */}
         <div className="flex items-center space-x-4 lg:space-x-6 text-lg">
-          <FaHeart className="cursor-pointer" />
+          
+           <div className="relative">
+            <NavLink to={'/wishlist'}><FaHeart className="cursor-pointer" /></NavLink>
+            {wishlist.length > 0 && (
+              <span className="absolute -top-3 -right-3 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                {wishlist.length}
+              </span>
+            )}
+          </div>
           <div className="relative">
-            <FaShoppingBag className="cursor-pointer" />
+            <NavLink to={'/cart'}><FaShoppingBag className="cursor-pointer" /></NavLink>
             {cart.length > 0 && (
               <span className="absolute -top-3 -right-3 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
                 {cart.reduce((sum, item) => sum + item.qty, 0)}
@@ -170,11 +178,11 @@ export default function Header() {
                     className="flex justify-between items-center py-2 px-2 hover:bg-gray-100 rounded cursor-pointer"
                   >
                     <NavLink
-                      to={`/shop?category=${cat}`}
+                      to={`/shop?category=${cat.name}`}
                       onClick={() => setCatOpen(false)}
                       className="w-full"
                     >
-                      {cat}
+                      {cat.name}
                     </NavLink>
                     <MdKeyboardArrowRight />
                   </li>

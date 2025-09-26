@@ -1,116 +1,154 @@
 import React, { useContext } from "react";
 import { ShopContext } from "../context/ShopContext";
-import { FaTrash } from "react-icons/fa";
+import { FaTrash, FaHeart, FaArrowLeft } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
 
 export default function CartPage() {
-  const { cart, removeFromCart, updateQuantity } = useContext(ShopContext);
+  const { cart, removeFromCart, addToCart, deleteFromCart, addToWishlist } =
+    useContext(ShopContext);
 
-  // 🧮 Calculate total price
-  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  // 🧮 Calculate totals
+  const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const discount = subtotal > 2000 ? 200 : 0;
+  const tax = subtotal * 0.05;
+  const total = subtotal - discount + tax;
 
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-10">
-      <h1 className="text-3xl font-bold mb-8 text-gray-800 text-center">
-        🛒 Your Shopping Cart
-      </h1>
+      <div className="max-w-7xl mx-auto">
+        {/* Title */}
 
-      {cart.length === 0 ? (
-        <div className="text-center py-24 bg-white rounded-xl shadow-md max-w-xl mx-auto">
-          <p className="text-gray-600 text-lg">Your cart is empty!</p>
-          <NavLink
-            to="/shop"
-            className="inline-block mt-6 px-8 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-full font-medium transition shadow-md"
-          >
-            Continue Shopping
-          </NavLink>
-        </div>
-      ) : (
-        <div className="grid lg:grid-cols-3 gap-10 max-w-7xl mx-auto">
-          {/* 🟢 Left: Cart Items */}
-          <div className="lg:col-span-2 space-y-6">
-            {cart.map((item) => (
-              <div
-                key={item.id}
-                className="flex items-center bg-white p-5 rounded-xl shadow-sm border hover:shadow-lg transition"
-              >
-                {/* Product Image */}
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  className="w-24 h-24 object-cover rounded-lg border"
-                />
+        {cart.length === 0 ? (
+          <div className="text-center py-20 bg-white rounded-2xl shadow-md max-w-lg mx-auto border">
+            <p className="text-gray-600 text-lg">Your cart is empty!</p>
+            <NavLink
+              to="/shop"
+              className="inline-block mt-6 px-8 py-3 bg-orange-500 hover:bg-orange-600 text-white rounded-lg font-semibold transition"
+            >
+              Continue Shopping
+            </NavLink>
+          </div>
+        ) : (
+          <div className="grid lg:grid-cols-3 gap-8">
+            {/* 🟢 Left: Cart Items */}
+            <div className="lg:col-span-2 space-y-5">
+              {cart.map((item) => (
+                <div
+                  key={item.id}
+                  className="flex bg-white p-5 border-b border-gray-200"
+                >
+                  {/* Product Image */}
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-32 h-32 object-contain"
+                  />
 
-                {/* Product Details */}
-                <div className="flex-1 ml-5">
-                  <h2 className="font-semibold text-gray-800 text-lg">
-                    {item.name}
-                  </h2>
-                  <p className="text-orange-600 font-bold mt-1">
-                    ₹{item.price}
-                  </p>
+                  {/* Product Details */}
+                  <div className="flex-1 ml-6">
+                    <h2 className="font-medium text-gray-900 text-lg line-clamp-2">
+                      {item.name}
+                    </h2>
 
-                  {/* Quantity Control */}
-                  <div className="flex items-center mt-3">
-                    <button
-                      onClick={() =>
-                        updateQuantity(item.id, Math.max(1, item.qty - 1))
-                      }
-                      className="px-3 py-1 bg-gray-200 rounded-l-lg hover:bg-gray-300 transition"
-                    >
-                      -
-                    </button>
-                    <span className="px-5 py-1 border-t border-b font-medium">
-                      {item.qty}
-                    </span>
-                    <button
-                      onClick={() => updateQuantity(item.id, item.qty + 1)}
-                      className="px-3 py-1 bg-gray-200 rounded-r-lg hover:bg-gray-300 transition"
-                    >
-                      +
-                    </button>
+                    {/* Stock + Shipping Info (optional placeholders) */}
+                    <p className="text-green-600 text-sm mt-1">In stock</p>
+                    <p className="text-xs text-gray-600">Eligible for FREE Shipping</p>
+
+                    {/* Quantity & Actions */}
+                    <div className="flex items-center gap-4 mt-3">
+                      {/* Quantity Control */}
+                      <div className="flex items-center border border-yellow-500 rounded-md overflow-hidden">
+                        <button
+                          onClick={() => removeFromCart(item.id)}
+                          className="px-3 py-1 hover:bg-yellow-100"
+                        >
+                          -
+                        </button>
+                        <span className="px-4 py-1 font-medium text-gray-800 bg-white">
+                          {item.qty}
+                        </span>
+                        <button
+                          onClick={() => addToCart(item)}
+                          className="px-3 py-1 hover:bg-yellow-100"
+                        >
+                          +
+                        </button>
+                      </div>
+
+                      {/* Delete & Save for later */}
+                      <button
+                        onClick={() => deleteFromCart(item.id)}
+                        className="text-blue-600 text-sm hover:underline"
+                      >
+                        Delete
+                      </button>
+                      <button
+                        onClick={() => {
+                          addToWishlist(item);
+                          deleteFromCart(item.id);
+                        }}
+                        className="text-blue-600 text-sm hover:underline"
+                      >
+                        Save for later
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Price Section */}
+                  <div className="text-right ml-6">
+                    <p className="text-lg font-bold text-gray-900">₹{item.price}</p>
+                    {item.oldPrice && (
+                      <p className="text-sm text-gray-500 line-through">₹{item.oldPrice}</p>
+                    )}
+                    {item.discount && (
+                      <p className="text-xs text-red-600 font-semibold">{item.discount}% off</p>
+                    )}
                   </div>
                 </div>
-
-                {/* Remove Button */}
-                <button
-                  onClick={() => removeFromCart(item.id)}
-                  className="text-red-500 hover:text-red-600 ml-5 p-2 rounded-full hover:bg-red-100 transition"
-                  title="Remove Item"
-                >
-                  <FaTrash />
-                </button>
-              </div>
-            ))}
-          </div>
-
-          {/* 🟡 Right: Order Summary */}
-          <div className="bg-white p-6 rounded-xl shadow-md border h-fit sticky top-24">
-            <h2 className="text-xl font-bold mb-6 text-gray-800">
-              Order Summary
-            </h2>
-
-            <div className="space-y-3 text-gray-700">
-              <div className="flex justify-between">
-                <span>Subtotal</span>
-                <span className="font-medium">₹{total}</span>
-              </div>
-              <div className="flex justify-between">
-                <span>Shipping</span>
-                <span className="text-green-600 font-medium">Free</span>
-              </div>
-              <div className="flex justify-between text-lg font-bold pt-3 border-t">
-                <span>Total</span>
-                <span>₹{total}</span>
-              </div>
+              ))}
             </div>
 
-            <button className="mt-8 w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-medium transition shadow-md">
-              Proceed to Checkout
-            </button>
+            {/* 🟡 Right: Order Summary */}
+            <div className="bg-white p-5 border-none rounded-md h-fit sticky top-20 space-y-4">
+              {/* ✅ Free Delivery Strip */}
+              <div className="bg-green-600 text-white text-sm font-medium px-3 py-1 rounded-full flex items-center justify-between">
+                <span>Your order is eligible for FREE Delivery</span>
+                <span className="ml-2">₹499</span>
+              </div>
+              <p className="text-sm text-gray-700">
+                Choose <span className="text-blue-600 cursor-pointer hover:underline">FREE Delivery</span> option at checkout.
+              </p>
+
+              {/* ✅ Subtotal */}
+              <div className="text-base font-semibold text-gray-900">
+                Subtotal ({cart.length} item{cart.length > 1 ? "s" : ""}):{" "}
+                <span className="text-gray-900 font-bold">₹{subtotal}</span>
+              </div>
+
+              {/* ✅ Gift Checkbox */}
+              <div className="flex items-center gap-2 text-sm text-gray-700">
+                <input type="checkbox" className="w-4 h-4" />
+                <label>This order contains a gift</label>
+              </div>
+
+              {/* ✅ Checkout Button */}
+              <button className="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 py-2 rounded-md font-semibold transition">
+                Proceed to Buy
+              </button>
+
+              {/* Continue Shopping */}
+              <NavLink
+                to="/shop"
+                className="flex items-center justify-center gap-2 mt-2 text-sm text-blue-600 hover:underline"
+              >
+                <FaArrowLeft /> Continue Shopping
+              </NavLink>
+            </div>
+
+
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
