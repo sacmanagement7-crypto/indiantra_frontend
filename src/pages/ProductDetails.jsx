@@ -8,6 +8,8 @@ export default function ProductDetails() {
   const { products } = useContext(ShopContext);
   const { addToCart } = useContext(ShopContext);
   const { cart } = useContext(ShopContext);
+  const [index,setIndex] = useState(0);
+
   const { wishlist, addToWishlist } = useContext(ShopContext);
   // const { user } = useContext(AuthContext); // 🔹 get logged-in user
 
@@ -86,92 +88,105 @@ export default function ProductDetails() {
   return (
     <div className="max-w-6xl mx-auto px-6 py-12">
       {/* 🔹 Product Info Section (same as before) */}
-      <div className="grid grid-cols-1 md:grid-cols-[180px_1fr] gap-6 bg-[#ffffff] p-4 shadow-lg">
-        {/* Left Image */}
-        <div className="flex justify-center items-start">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="w-[160px] h-[180px] object-contain"
-          />
-        </div>
-
-        {/* Right Details */}
-        <div className="flex flex-col justify-between">
-          <div>
-            {/* Product Name */}
-            <h1 className="text-base font-medium text-gray-900 leading-snug">
-              {product.name}
-            </h1>
-
-            {/* Rating */}
-            <div className="flex items-center gap-2 mt-1">
-              <span className="text-yellow-400 text-sm">⭐ ⭐ ⭐ ⭐ ☆</span>
-              <span className="text-xs text-gray-500">
-                ({reviews.length} reviews)
-              </span>
-            </div>
-
-            {/* Price */}
-            <div className="mt-2 flex items-center gap-2">
-              <p className="text-lg font-bold text-orange-600">
-                ₹{product.price}
-              </p>
-              <p className="line-through text-gray-400 text-sm">
-                ₹{product.oldPrice}
-              </p>
-              <span className="bg-red-100 text-red-600 text-[11px] px-2 py-0.5 rounded font-medium">
-                -{product.discount}%
-              </span>
-            </div>
-
-            {/* Description */}
-            <p className="mt-3 text-xs text-gray-600 leading-snug">
-              {product.description ||
-                "This is a premium product with excellent quality and durability."}
-            </p>
+      <div className="grid grid-cols-1 md:grid-cols-[320px_1fr] gap-6 bg-white p-6 shadow-lg rounded-md">
+        {/* ==== Left Image Section ==== */}
+        <div className="flex flex-col items-center">
+          {/* Main Image */}
+          <div className="w-full border rounded-lg p-3 flex justify-center">
+            <img
+              src={product.images[index]}
+              alt={product.name}
+              className="w-[280px] h-[320px] object-contain"
+            />
           </div>
 
-          {/* Buttons */}
-          <div className="mt-4 flex flex-wrap gap-3 text-xs text-gray-600">
+          {/* Thumbnail Images */}
+          <div className="flex gap-2 mt-3 overflow-x-auto">
+            {product.images.map((img, idx) => (
+              <img
+                key={idx}
+                src={img}
+                alt={`thumb-${idx}`}
+                onClick={()=>setIndex(idx)}
+                className="w-14 h-14 border rounded cursor-pointer hover:border-orange-500 object-contain"
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* ==== Right Details Section ==== */}
+        <div className="flex flex-col">
+          {/* Title */}
+          <h1 className="text-lg font-medium text-gray-900 leading-snug">
+            {product.name}
+          </h1>
+
+          {/* Ratings */}
+          <div className="flex items-center gap-2 mt-2">
+            <span className="text-yellow-400 text-sm">⭐ ⭐ ⭐ ⭐ ☆</span>
+            <span className="text-xs text-gray-500">
+              {reviews.length} ratings
+            </span>
+            <span className="ml-2 text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded">
+              Amazon's Choice
+            </span>
+          </div>
+
+          {/* Price Section */}
+          <div className="mt-3 flex items-end gap-2">
+            <p className="text-2xl font-bold text-orange-600">
+              ₹{product.price}
+            </p>
+            <p className="line-through text-gray-400 text-sm">
+              ₹{product.oldPrice}
+            </p>
+            <span className="bg-red-100 text-red-600 text-xs px-2 py-0.5 rounded font-medium">
+              -{product.discount}%
+            </span>
+          </div>
+          <p className="text-xs text-gray-500">Inclusive of all taxes</p>
+
+          {/* Offers Section */}
+          <div className="mt-4 grid grid-cols-2 gap-3 text-xs">
+            <div className="border rounded p-2">
+              <p className="font-medium text-gray-700">Cashback</p>
+              <p className="text-gray-500">Up to ₹809 as Amazon Pay Balance</p>
+            </div>
+            <div className="border rounded p-2">
+              <p className="font-medium text-gray-700">Partner Offers</p>
+              <p className="text-gray-500">Save up to 18% on GST invoice</p>
+            </div>
+          </div>
+
+          {/* Delivery & Stock Info */}
+          <p className="mt-4 text-sm text-green-700 font-medium">
+            In stock · Free delivery Tomorrow
+          </p>
+          <p className="text-xs text-gray-600">
+            Sold by <span className="text-blue-600">Clicktech Retail Pvt Ltd</span>
+          </p>
+
+          {/* Action Buttons */}
+          <div className="mt-5 flex flex-col gap-3">
             <button
-              onClick={() => {
-                addToCart(product);
-              }}
-              className="px-3 py-1 border rounded hover:bg-gray-50 transition"
+              onClick={() => addToCart(product)}
+              className="px-6 py-2 bg-yellow-400 hover:bg-yellow-500 text-black font-medium rounded shadow"
             >
               🛒 Add to Cart
             </button>
             <button
-              onClick={() => {
-                addToWishlist(product);
-              }}
-              className="px-3 py-1 border rounded hover:bg-gray-50 transition"
+              onClick={() => addToWishlist(product)}
+              className="px-6 py-2 bg-orange-500 hover:bg-orange-600 text-white font-medium rounded shadow"
             >
-              ❤️ Add to Wishlist
-            </button>
-            <button className="px-3 py-1 border rounded hover:bg-gray-50 transition">
-              Save for later
-            </button>
-            <button className="px-3 py-1 border rounded hover:bg-gray-50 transition">
-              See more like this
+              ❤️ Add To Wishlist
             </button>
           </div>
         </div>
       </div>
 
-
-
       {/* 🔹 Product Details Section */}
       <div className="mt-12 bg-[#ffffff] shadow p-6">
         {/* 🔹 Product Image */}
-        <div className="w-full h-[300px] flex justify-center items-center bg-gray-50 rounded-lg overflow-hidden">
-          <img
-            src={product.image}
-            alt={product.name}
-            className="w-full h-full object-contain"
-          />
-        </div>
 
         {/* 🔹 Product Description */}
         <h2 className="text-xl font-semibold text-gray-800 mt-6 mb-3">

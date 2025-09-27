@@ -76,7 +76,7 @@ export default function WishlistPage() {
                       {/* Product Image */}
                       <div className="w-40 h-40 bg-gray-50  overflow-hidden flex items-center justify-center shadow-sm">
                         <img
-                          src={item.image}
+                          src={item.images[0]}
                           alt={item.name}
                           className="w-full h-full object-cover hover:scale-105 transition duration-300"
                         />

@@ -30,7 +30,9 @@ export default function AuthPage() {
           password: form.password,
         });
         setMessage(`✅ Welcome back, ${res.data.name}`);
-        localStorage.setItem("user", JSON.stringify(res.data)); // store user
+        localStorage.setItem("user", JSON.stringify(res.data));
+        localStorage.setItem("token",JSON.stringify(res.data.token))
+        console.log(res.data) 
       } else {
         // 🆕 Register API
         const res = await api.post("/auth/register", form);

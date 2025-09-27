@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaSyncAlt, FaHeart, FaShoppingBag, FaUser, FaBars, FaTimes } from "react-icons/fa";
+import { FaHeart, FaShoppingBag, FaUser, FaBars, FaTimes } from "react-icons/fa";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useContext } from "react";
@@ -8,7 +8,7 @@ import { ShopContext } from "../context/ShopContext";
 import { useEffect } from "react";
 
 export default function Header() {
-  const { categories,products, cart,wishlist } = useContext(ShopContext);
+  const { categories, products, cart, wishlist } = useContext(ShopContext);
   const [open, setOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [catOpen, setCatOpen] = useState(false);
@@ -52,9 +52,9 @@ export default function Header() {
     setMessage("👋 Logged out");
   };
   return (
-    <header className="w-full font-sans text-sm text-gray-700 border-b">
+    <header className="w-full font-sans text-sm text-gray-700 border-b bg-[#ffffff] sticky top-0 z-10">
       {/* 🔹 Middle Section */}
-      <div className="flex items-center justify-between px-4 lg:px-8 py-4">
+      <div className="flex items-center justify-between px-4 lg:px-8 py-0.5">
         {/* Logo */}
         <NavLink to="/">
           <div className="flex items-center">
@@ -91,8 +91,8 @@ export default function Header() {
 
         {/* Icons */}
         <div className="flex items-center space-x-4 lg:space-x-6 text-lg">
-          
-           <div className="relative">
+
+          <div className="relative">
             <NavLink to={'/wishlist'}><FaHeart className="cursor-pointer" /></NavLink>
             {wishlist.length > 0 && (
               <span className="absolute -top-3 -right-3 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
@@ -125,29 +125,45 @@ export default function Header() {
           {open && (
             <div className="absolute top-[70px] right-4 mt-3 w-48 z-10 rounded-2xl border border-gray-200 bg-white shadow-lg shadow-gray-200/50 ring-1 ring-black/5">
               <div className="py-2">
-                <button className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  {user ? (
-                    <NavLink to="/account">My Account</NavLink>
-                  ) : (
-                    <NavLink to="/auth">Login/Register</NavLink>
-                  )}
+                <button
+                  className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  onClick={() => {
+                    setOpen(false); // 👈 menu close
+                    window.location.href = user ? "/account" : "/auth"; // 👈 redirect + reload
+                  }}
+                >
+                  {user ? "My Account" : "Login/Register"}
                 </button>
-                <button className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
+
+                <button
+                  className="block w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  onClick={() => {
+                    setOpen(false); // close menu
+                    window.location.href = "/setting"; // redirect + reload
+                  }}
+                >
                   Settings
                 </button>
-                <button onClick={() => {
-                  handleLogout()
-                }} className="block w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50">
+
+                <button
+                  onClick={() => {
+                    handleLogout();
+                    setOpen(false); // close menu
+                    window.location.reload(); // full reload after logout
+                  }}
+                  className="block w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50"
+                >
                   Logout
                 </button>
               </div>
             </div>
           )}
+
         </div>
       </div>
 
       {/* 🔹 Bottom Nav */}
-      <nav className="hidden lg:flex items-center justify-between bg-[#ffb938] px-8 py-3 text-gray-800 relative">
+      <nav className="hidden lg:flex items-center justify-between bg-[#ffb938] px-8 py-2 text-gray-800 relative">
         <div className="flex items-center space-x-6 font-medium relative">
           {/* All Categories Button */}
           <button
@@ -160,36 +176,40 @@ export default function Header() {
 
           {/* Categories Dropdown */}
           {catOpen && (
-            <div className="fixed top-0 left-0 w-72 h-full bg-white shadow-lg z-50 overflow-y-auto">
+            <div className="fixed top-0 left-0 w-72 h-full bg-white shadow-lg z-50 overflow-y-auto transition-transform duration-300">
               {/* Header */}
-              <div className="flex items-center justify-between p-4 border-b">
-                <h2 className="font-semibold text-lg">Hello, sign in</h2>
+              <div className="flex items-center justify-between p-4 border-b bg-[#ffb938]">
+                <h2 className="font-semibold text-lg text-gray-800">
+                  Hello, {user?.name || 'Sign In'}
+                </h2>
                 <FaTimes
-                  className="cursor-pointer text-xl"
+                  className="cursor-pointer text-2xl text-gray-700 hover:text-red-600 transition"
                   onClick={() => setCatOpen(false)}
                 />
               </div>
 
               {/* Categories */}
-              <ul className="p-4 space-y-3">
+              <ul className="p-4 space-y-2">
                 {categories.map((cat, idx) => (
                   <li
                     key={idx}
-                    className="flex justify-between items-center py-2 px-2 hover:bg-gray-100 rounded cursor-pointer"
+                    className="group flex justify-between items-center py-3 px-3 rounded-lg cursor-pointer 
+                     hover:bg-[#ffecd2] transition-all duration-200"
                   >
                     <NavLink
                       to={`/shop?category=${cat.name}`}
                       onClick={() => setCatOpen(false)}
-                      className="w-full"
+                      className="w-full font-medium text-gray-700 group-hover:text-[#ff8a00] transition"
                     >
                       {cat.name}
                     </NavLink>
-                    <MdKeyboardArrowRight />
+                    <MdKeyboardArrowRight className="text-gray-500 group-hover:text-[#ff8a00] group-hover:translate-x-1 transition-transform duration-200" />
                   </li>
                 ))}
               </ul>
             </div>
           )}
+
 
           <NavLink to="/" className="hover:text-white transition">
             Homepage

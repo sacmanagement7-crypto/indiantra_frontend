@@ -160,7 +160,7 @@ export default function ShopPage() {
               {/* Product Image */}
               <div className="w-full h-48 bg-gray-50 rounded-lg overflow-hidden flex items-center justify-center">
                 <img
-                  src={p.image}
+                  src={p.images[0]}
                   alt={p.name}
                   className="h-full w-full object-cover hover:scale-105 transition duration-300"
                 />

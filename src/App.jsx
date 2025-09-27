@@ -15,6 +15,13 @@ import Test from './pages/Test'
 import ProductDetails from './pages/ProductDetails'
 import CartPage from './pages/CartPage'
 import WishlistPage from './pages/WishlistPage'
+import CheckoutPage from './pages/checkoutPage'
+import AccountPage from './pages/UserPannel/AccountPage'
+import Orders from './pages/UserPannel/Orders'
+import Setting from './pages/UserPannel/Setting'
+import Address from './pages/UserPannel/Address'
+import ProtectedRoute from './components/protectedRoute'
+import FAQPage from './pages/FAQPage'
 
 const App = () => {
   return (
@@ -33,6 +40,14 @@ const App = () => {
         <Route path='*' element={<NotFound/>}/>
         <Route path='/cart' element={<CartPage/>}/>
         <Route path='/wishlist' element={<WishlistPage/>}/>
+        <Route path='/checkout' element={<CheckoutPage/>}/>
+        
+        <Route path='/faqs' element={<FAQPage/>}/>
+        <Route path='/account' element={<ProtectedRoute><AccountPage/></ProtectedRoute>}/>
+        <Route path='/account/orders' element={<ProtectedRoute><Orders/></ProtectedRoute>}/>
+        <Route path='/account/settings' element={<ProtectedRoute><Setting/></ProtectedRoute>}/>
+        <Route path='/account/address' element={<ProtectedRoute><Address/></ProtectedRoute>}/>
+        <Route path='/account/support' element={<ProtectedRoute><Orders/></ProtectedRoute>}/>
        </Routes>
        <Footer/>
 

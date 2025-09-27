@@ -40,7 +40,7 @@ export default function Footer() {
           <h3 className="font-semibold mb-4 text-lg">Helpful</h3>
           <ul className="space-y-2 text-sm">
             <li><a href="#" className="hover:text-yellow-300 transition">Flash Sale</a></li>
-            <li><a href="#" className="hover:text-yellow-300 transition">FAQ</a></li>
+            <li><a href="/faqs" className="hover:text-yellow-300 transition">FAQ</a></li>
             <li><a href="#" className="hover:text-yellow-300 transition">Support</a></li>
           </ul>
         </div>

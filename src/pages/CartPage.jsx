@@ -1,17 +1,35 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import { FaTrash, FaHeart, FaArrowLeft } from "react-icons/fa";
-import { NavLink } from "react-router-dom";
+import { NavLink} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function CartPage() {
   const { cart, removeFromCart, addToCart, deleteFromCart, addToWishlist } =
     useContext(ShopContext);
+
+  const [user,setUser] = useState({});
+
+  const navigate = useNavigate();
+
+  useEffect(()=>{
+     const user =  localStorage.getItem('user');
+     setUser(user)
+  },[])
 
   // 🧮 Calculate totals
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
   const discount = subtotal > 2000 ? 200 : 0;
   const tax = subtotal * 0.05;
   const total = subtotal - discount + tax;
+
+  const handleproceedtopay = ()=>{
+    if(!user){
+      alert('login first')
+    }else{
+      navigate('/checkout')
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 px-4 py-10">
@@ -39,7 +57,7 @@ export default function CartPage() {
                 >
                   {/* Product Image */}
                   <img
-                    src={item.image}
+                    src={item.images[0]}
                     alt={item.name}
                     className="w-32 h-32 object-contain"
                   />
@@ -132,7 +150,9 @@ export default function CartPage() {
               </div>
 
               {/* ✅ Checkout Button */}
-              <button className="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 py-2 rounded-md font-semibold transition">
+              <button onClick={()=>{
+                handleproceedtopay()
+              }} className="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 py-2 rounded-md font-semibold transition">
                 Proceed to Buy
               </button>
 
