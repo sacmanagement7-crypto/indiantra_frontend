@@ -20,7 +20,7 @@ export default function CategorySection() {
   const sp1024 = Math.min(categories.length, 8);
 
   return (
-    <div className="w-full bg-white shadow-sm py-2 px-2 max-w-7xl mx-auto relative">
+    <div className="w-full bg-white shadow-sm py-3 px-3 max-w-7xl mx-auto relative">
       <Swiper
         modules={[Navigation]}
         navigation={true}
