@@ -1,4 +1,5 @@
 import React from 'react'
+import { useContext } from 'react'
 import HeroSection from '../components/Herosection'
 import NewsletterBanner from '../components/NewsletterBanner'
 import FeaturesBar from '../components/FeaturesBar'
@@ -7,8 +8,10 @@ import BestSeller from '../components/BestSeller'
 import CategorySection from '../components/CategorySection'
 import BestDeails from '../components/BestDeails'
 import Highlights from '../components/Highlights'
+import { ShopContext } from '../context/ShopContext'
 
 const Home = () => {
+  const {products} = useContext(ShopContext);
   return (
     <div className='flex flex-col'>
         <CategorySection/>

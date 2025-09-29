@@ -37,10 +37,10 @@ const App = () => {
         <Route path='/seller-login' element={<SellerLogin/>}/>
         <Route path='/test' element={<Test/>}/>
         <Route path='/product/:id' element={<ProductDetails/>}/>
-        <Route path='*' element={<NotFound/>}/>
+        {/* <Route path='*' element={<NotFound/>}/> */}
         <Route path='/cart' element={<CartPage/>}/>
         <Route path='/wishlist' element={<WishlistPage/>}/>
-        <Route path='/checkout' element={<CheckoutPage/>}/>
+        <Route path='/checkout' element={<CheckoutPage/>}/> 
         
         <Route path='/faqs' element={<FAQPage/>}/>
         <Route path='/account' element={<ProtectedRoute><AccountPage/></ProtectedRoute>}/>
