@@ -181,15 +181,24 @@ export default function Header() {
 
           {/* Categories Dropdown */}
           {catOpen && (
-            <div className="fixed top-0 left-0 w-72 h-full bg-white shadow-lg z-50 overflow-y-auto transition-transform duration-300">
+            <div className="fixed top-0 left-0 w-72 h-full bg-white shadow-xl z-50 overflow-y-auto transform transition-transform duration-300 translate-x-0">
               {/* Header */}
-              <div className="flex items-center justify-between p-4 border-b bg-[#ffb938]">
-                <h2 className="font-semibold text-lg text-gray-800">
-                  Hello, {user?.name || 'Sign In'}
+              <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-yellow-400 to-yellow-500 rounded-tr-lg rounded-br-lg shadow-md">
+                <h2 className="font-semibold text-lg text-gray-900">
+                  Hello, {user?.name || "Sign In"}
                 </h2>
                 <FaTimes
-                  className="cursor-pointer text-2xl text-gray-700 hover:text-red-600 transition"
+                  className="cursor-pointer text-2xl text-gray-700 hover:text-red-600 transition transform hover:scale-110"
                   onClick={() => setCatOpen(false)}
+                />
+              </div>
+
+              {/* Search Box (optional, modern touch) */}
+              <div className="p-4">
+                <input
+                  type="text"
+                  placeholder="Search categories..."
+                  className="w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-yellow-400 focus:outline-none"
                 />
               </div>
 
@@ -198,20 +207,35 @@ export default function Header() {
                 {categories.map((cat, idx) => (
                   <li
                     key={idx}
-                    className="group flex justify-between items-center py-3 px-3 rounded-lg cursor-pointer 
-                     hover:bg-[#ffecd2] transition-all duration-200"
+                    className="group flex justify-between items-center py-3 px-3 rounded-lg cursor-pointer hover:bg-yellow-50 transition-all duration-200 shadow-sm"
                   >
                     <NavLink
                       to={`/shop?category=${cat.name}`}
                       onClick={() => setCatOpen(false)}
-                      className="w-full font-medium text-gray-700 group-hover:text-[#ff8a00] transition"
+                      className="w-full font-medium text-gray-700 group-hover:text-yellow-700 transition"
                     >
                       {cat.name}
                     </NavLink>
-                    <MdKeyboardArrowRight className="text-gray-500 group-hover:text-[#ff8a00] group-hover:translate-x-1 transition-transform duration-200" />
+                    <MdKeyboardArrowRight className="text-gray-400 group-hover:text-yellow-700 group-hover:translate-x-1 transition-transform duration-200" />
                   </li>
                 ))}
               </ul>
+
+              {/* Footer / Extra Links */}
+              <div className="mt-auto p-4 border-t space-y-2">
+                <NavLink
+                  to="/contact"
+                  className="block text-gray-700 hover:text-yellow-600 font-medium transition"
+                >
+                  Contact Us
+                </NavLink>
+                <NavLink
+                  to="/faq"
+                  className="block text-gray-700 hover:text-yellow-600 font-medium transition"
+                >
+                  FAQ
+                </NavLink>
+              </div>
             </div>
           )}
 

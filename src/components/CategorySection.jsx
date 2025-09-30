@@ -15,8 +15,8 @@ export default function CategorySection() {
   // Responsive slides
   const slidesPerViewDefault = Math.min(categories.length || 1, 8);
   const sp320 = Math.min(categories.length, 3);
-  const sp640 = Math.min(categories.length, 4);
-  const sp768 = Math.min(categories.length, 6);
+  const sp640 = Math.min(categories.length, 3);
+  const sp768 = Math.min(categories.length, 5);
   const sp1024 = Math.min(categories.length, 8);
 
   return (

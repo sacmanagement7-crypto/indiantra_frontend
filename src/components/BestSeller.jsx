@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { ShopContext } from "../context/ShopContext";
 import { FaHeart } from "react-icons/fa";
+import { Link } from "react-router";
 
 export default function BestSeller() {
   const { products, wishlist ,addToCart,addToWishlist} = useContext(ShopContext);
@@ -25,6 +26,7 @@ export default function BestSeller() {
       {/* Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {bestSellers.map((b) => (
+          <Link key={b.id} to={`/product/${b.id}`}>
           <div
             key={b.id}
             className="bg-white border border-gray-200 rounded-lg hover:shadow-md transition-all duration-300 p-4 flex flex-col relative"
@@ -77,6 +79,7 @@ export default function BestSeller() {
               </button>
             </div>
           </div>
+          </Link>
         ))}
       </div>
     </section>

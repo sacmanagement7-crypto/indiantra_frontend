@@ -84,7 +84,7 @@ export default function AccountPage() {
   return (
     <div className="max-w-6xl mx-auto p-6">
       {/* Header */}
-      <h1 className="text-3xl font-extrabold mb-8 text-gray-800">
+      <h1 className="text-2xl md:text-3xl font-extrabold mb-10 text-gray-800">
         👋 Hello, {user.name || "Guest"}
       </h1>
 
@@ -94,25 +94,25 @@ export default function AccountPage() {
           <div
             key={id}
             onClick={() => navigate(path)}
-            className="relative flex items-start space-x-4 p-6 rounded-2xl border bg-white shadow-md hover:shadow-xl hover:-translate-y-1 transition cursor-pointer group"
+            className="relative flex items-start space-x-4 p-5 sm:p-6 rounded-2xl border bg-white shadow-sm hover:shadow-lg hover:-translate-y-1 transition cursor-pointer group overflow-hidden"
           >
             {/* Icon Circle */}
             <div
-              className={`${bg} ${color} w-12 h-12 flex items-center justify-center rounded-full shadow-sm group-hover:scale-110 transition`}
+              className={`${bg} ${color} w-12 h-12 flex items-center justify-center rounded-full shadow-sm group-hover:scale-110 transition-transform duration-300`}
             >
-              <Icon className="w-6 h-6" />
+              <Icon className="w-5 h-5 sm:w-6 sm:h-6" />
             </div>
 
             {/* Content */}
             <div>
-              <h3 className="text-lg font-semibold text-gray-800">
+              <h3 className="text-base sm:text-lg font-semibold text-gray-800">
                 {label}
               </h3>
-              <p className="text-sm text-gray-500">{desc}</p>
+              <p className="text-xs sm:text-sm text-gray-500 mt-1">{desc}</p>
             </div>
 
             {/* Decorative Glow */}
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-100/20 to-transparent opacity-0 group-hover:opacity-100 transition"></div>
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-orange-100/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"></div>
           </div>
         ))}
       </div>

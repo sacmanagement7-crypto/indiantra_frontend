@@ -22,6 +22,7 @@ import Setting from './pages/UserPannel/Setting'
 import Address from './pages/UserPannel/Address'
 import ProtectedRoute from './components/protectedRoute'
 import FAQPage from './pages/FAQPage'
+import Journey from './pages/Journey'
 
 const App = () => {
   return (
@@ -48,6 +49,7 @@ const App = () => {
         <Route path='/account/settings' element={<ProtectedRoute><Setting/></ProtectedRoute>}/>
         <Route path='/account/address' element={<ProtectedRoute><Address/></ProtectedRoute>}/>
         <Route path='/account/support' element={<ProtectedRoute><Orders/></ProtectedRoute>}/>
+        <Route path='/journey' element={<Journey/>}/>
        </Routes>
        <Footer/>
 

@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { ShopContext } from "../context/ShopContext";
 import { FaHeart } from "react-icons/fa";
+import { Link } from "react-router";
 
 export default function BestDeals() {
   const { products, addToCart} = useContext(ShopContext);
@@ -25,6 +26,7 @@ export default function BestDeals() {
       {/* Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {bestDeals.map((book) => (
+          <Link key={book.id} to={`/product/${book.id}`}>
           <div
             key={book.id}
             className="group bg-white hover:shadow-md transition p-3 flex flex-col relative"
@@ -69,6 +71,7 @@ export default function BestDeals() {
               </button>
             </div>
           </div>
+          </Link>
         ))}
       </div>
     </section>
