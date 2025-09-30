@@ -18,18 +18,18 @@ export default function Header() {
   const [searchText, setSearchText] = useState("");
 
   const navigate = useNavigate();
-  
+
   useEffect(() => {
-  const storedUser = localStorage.getItem("user");
-  if (storedUser && storedUser !== "undefined") {
-    try {
-      setUser(JSON.parse(storedUser));
-    } catch (error) {
-      console.error("Invalid JSON in localStorage user:", error);
-      localStorage.removeItem("user"); // cleanup bad data
+    const storedUser = localStorage.getItem("user");
+    if (storedUser && storedUser !== "undefined") {
+      try {
+        setUser(JSON.parse(storedUser));
+      } catch (error) {
+        console.error("Invalid JSON in localStorage user:", error);
+        localStorage.removeItem("user"); // cleanup bad data
+      }
     }
-  }
-}, []);
+  }, []);
 
 
   const handleSearch = () => {

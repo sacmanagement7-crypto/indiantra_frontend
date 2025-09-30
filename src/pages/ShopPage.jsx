@@ -4,7 +4,7 @@ import { ShopContext } from "../context/ShopContext";
 import { Link, useLocation } from "react-router";
 
 export default function ShopPage() {
-  const { categories,products, addToCart } = useContext(ShopContext);
+  const { categories, products, addToCart } = useContext(ShopContext);
   const [view, setView] = useState("grid");
   const location = useLocation();
 
@@ -108,8 +108,8 @@ export default function ShopPage() {
           <div className="flex items-center gap-2">
             <button
               className={`p-2 rounded-lg shadow-sm transition ${view === "grid"
-                  ? "bg-orange-500 text-white"
-                  : "bg-gray-100 hover:bg-gray-200"
+                ? "bg-orange-500 text-white"
+                : "bg-gray-100 hover:bg-gray-200"
                 }`}
               onClick={() => setView("grid")}
             >
@@ -143,59 +143,61 @@ export default function ShopPage() {
         {/* 🔹 Product Grid */}
         <div
           className={`grid gap-6 ${view === "grid"
-              ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-              : "grid-cols-1"
+            ? "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+            : "grid-cols-1"
             }`}
         >
           {filteredProducts.map((p) => (
-            <div
-              key={p.id}
-              className="relative p-4 bg-[#ffffff] hover:shadow-xl hover:-translate-y-1 transition duration-200 text-sm"
-            >
-              {/* Discount Badge */}
-              <span className="absolute top-3 left-3 bg-green-500 text-white text-[10px] font-semibold px-2 py-0.5 rounded-full shadow z-5">
-                -{p.discount}%
-              </span>
-
-              {/* Product Image */}
-              <div className="w-full h-48 bg-gray-50 rounded-lg overflow-hidden flex items-center justify-center">
-                <img
-                  src={p.images[0]}
-                  alt={p.name}
-                  className="h-full w-full object-cover hover:scale-105 transition duration-300"
-                />
-              </div>
-
-              {/* Title */}
-              <h3 className="mt-3 font-medium text-gray-900 text-base line-clamp-2 hover:text-orange-600 transition">
-                {p.name}
-              </h3>
-
-              {/* Price Section */}
-              <div className="mt-2 flex items-center gap-2">
-                <span className="text-lg font-bold text-orange-600">
-                  ₹{p.price}
-                </span>
-                <span className="text-sm line-through text-gray-400">
-                  ₹{p.oldPrice}
-                </span>
-              </div>
-
-              {/* CTA Buttons */}
-              <button
-                onClick={() => addToCart(p)}
-                className="mt-4 w-full py-2 bg-orange-500 text-white rounded-lg shadow hover:bg-orange-600 transition text-sm font-medium"
+            <Link to={`/product/${p.id}`}>
+              <div
+                key={p.id}
+                className="relative p-4 bg-[#ffffff] hover:shadow-xl hover:-translate-y-1 transition duration-200 text-sm"
               >
-                Add to Cart
-              </button>
+                {/* Discount Badge */}
+                <span className="absolute top-3 left-3 bg-green-500 text-white text-[10px] font-semibold px-2 py-0.5 rounded-full shadow z-5">
+                  -{p.discount}%
+                </span>
 
-              <Link
-                to={`/product/${p.id}`}
-                className="mt-2 block w-full text-center py-2 border border-orange-500 text-orange-500 rounded-lg hover:bg-orange-50 transition text-sm font-medium"
-              >
-                View Details
-              </Link>
-            </div>
+                {/* Product Image */}
+                <div className="w-full h-48 bg-gray-50 rounded-lg overflow-hidden flex items-center justify-center">
+                  <img
+                    src={p.images[0]}
+                    alt={p.name}
+                    className="h-full w-full object-cover hover:scale-120 transition duration-300"
+                  />
+                </div>
+
+                {/* Title */}
+                <h3 className="mt-3 font-medium text-gray-900 text-base line-clamp-2 hover:text-orange-600 transition">
+                  {p.name}
+                </h3>
+
+                {/* Price Section */}
+                <div className="mt-2 flex items-center gap-2">
+                  <span className="text-lg font-bold text-orange-600">
+                    ₹{p.price}
+                  </span>
+                  <span className="text-sm line-through text-gray-400">
+                    ₹{p.oldPrice}
+                  </span>
+                </div>
+
+                {/* CTA Buttons */}
+                <button
+                  onClick={() => addToCart(p)}
+                  className="mt-4 w-full py-2 bg-orange-500 text-white rounded-lg shadow hover:bg-orange-600 transition text-sm font-medium"
+                >
+                  Add to Cart
+                </button>
+
+                <Link
+                  to={`/product/${p.id}`}
+                  className="mt-2 block w-full text-center py-2 border border-orange-500 text-orange-500 rounded-lg hover:bg-orange-50 transition text-sm font-medium"
+                >
+                  View Details
+                </Link>
+              </div>
+            </Link>
           ))}
         </div>
       </main>
