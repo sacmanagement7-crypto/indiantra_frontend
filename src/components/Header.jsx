@@ -43,7 +43,7 @@ export default function Header() {
     })
 
     if (match) {
-      navigate(`/product/${match.id}`)
+      navigate(`/product/${match._id}`)
       setSearchText("");
     } else {
       alert("❌ No product found!");

@@ -69,7 +69,7 @@ export default function GamerWorld() {
           {/* Product cards */}
           {products.map((product) => (
             <div
-              key={product.id}
+              key={product._id}
               className="bg-white rounded-lg shadow-md hover:shadow-lg transition p-5 relative"
             >
               {/* Tag */}

@@ -148,9 +148,9 @@ export default function ShopPage() {
             }`}
         >
           {filteredProducts.map((p) => (
-            <Link to={`/product/${p.id}`}>
+            <Link to={`/product/${p._id}`}>
               <div
-                key={p.id}
+                key={p._id}
                 className="relative p-4 bg-[#ffffff] hover:shadow-xl hover:-translate-y-1 transition duration-200 text-sm"
               >
                 {/* Discount Badge */}
@@ -191,7 +191,7 @@ export default function ShopPage() {
                 </button>
 
                 <Link
-                  to={`/product/${p.id}`}
+                  to={`/product/${p._id}`}
                   className="mt-2 block w-full text-center py-2 border border-orange-500 text-orange-500 rounded-lg hover:bg-orange-50 transition text-sm font-medium"
                 >
                   View Details

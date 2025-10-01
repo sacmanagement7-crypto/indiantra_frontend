@@ -28,7 +28,7 @@ import Home from "../assets/Home.png"
 
 export const Products = [
   {
-    id: 1,
+    _id: 1,
     name: "Handloom Cotton Kurta",
     price: 999,
     oldPrice: 1199,
@@ -40,7 +40,7 @@ export const Products = [
     isRecommended: true,
   },
   {
-    id: 2,
+    _id: 2,
     name: "Banarasi Silk Saree",
     price: 3499,
     oldPrice: 3999,
@@ -52,7 +52,7 @@ export const Products = [
     isRecommended: true,
   },
   {
-    id: 3,
+    _id: 3,
     name: "Khadi Nehru Jacket",
     price: 1499,
     oldPrice: 1799,
@@ -64,7 +64,7 @@ export const Products = [
     isRecommended: false,
   },
   {
-    id: 4,
+    _id: 4,
     name: "Cotton Printed Dupatta",
     price: 499,
     oldPrice: 699,
@@ -76,7 +76,7 @@ export const Products = [
     isRecommended: true,
   },
   {
-    id: 5,
+    _id: 5,
     name: "Handwoven Wool Shawl",
     price: 1999,
     oldPrice: 2499,
@@ -88,7 +88,7 @@ export const Products = [
     isRecommended: false,
   },
   {
-    id: 6,
+    _id: 6,
     name: "Block Print Kurti",
     price: 899,
     oldPrice: 1099,
@@ -100,7 +100,7 @@ export const Products = [
     isRecommended: true,
   },
   {
-    id: 7,
+    _id: 7,
     name: "Terracotta Clay Pot",
     price: 399,
     oldPrice: 499,
@@ -112,7 +112,7 @@ export const Products = [
     isRecommended: true,
   },
   {
-    id: 8,
+    _id: 8,
     name: "Handmade Jute Bag",
     price: 599,
     oldPrice: 799,
@@ -124,7 +124,7 @@ export const Products = [
     isRecommended: false,
   },
   {
-    id: 9,
+    _id: 9,
     name: "Wooden Spice Box",
     price: 799,
     oldPrice: 999,
@@ -136,7 +136,7 @@ export const Products = [
     isRecommended: true,
   },
   {
-    id: 10,
+    _id: 10,
     name: "Brass Diya Lamp",
     price: 999,
     oldPrice: 1299,
@@ -148,7 +148,7 @@ export const Products = [
     isRecommended: false,
   },
   {
-    id: 11,
+    _id: 11,
     name: "Madhubani Painting",
     price: 2499,
     oldPrice: 2999,
@@ -160,7 +160,7 @@ export const Products = [
     isRecommended: true,
   },
   {
-    id: 12,
+    _id: 12,
     name: "Handwoven Bamboo Basket",
     price: 499,
     oldPrice: 699,
@@ -172,7 +172,7 @@ export const Products = [
     isRecommended: true,
   },
   {
-    id: 32,
+    _id: 32,
     name: "Clay Kadai",
     price: 209,
     oldPrice: 299,
@@ -184,7 +184,7 @@ export const Products = [
     isRecommended: false,
   },
   {
-    id: 13,
+    _id: 13,
     name: "Wooden Wall Hanging",
     price: 1299,
     oldPrice: 1599,
@@ -196,7 +196,7 @@ export const Products = [
     isRecommended: false,
   },
   {
-    id: 14,
+    _id: 14,
     name: "Handcrafted Table Lamp",
     price: 1599,
     oldPrice: 1999,
@@ -208,7 +208,7 @@ export const Products = [
     isRecommended: true,
   },
   {
-    id: 15,
+    _id: 15,
     name: "Ceramic Flower Vase",
     price: 899,
     oldPrice: 1099,
@@ -220,7 +220,7 @@ export const Products = [
     isRecommended: true,
   },
   {
-    id: 16,
+    _id: 16,
     name: "Macrame Wall Hanging",
     price: 1199,
     oldPrice: 1499,
@@ -232,7 +232,7 @@ export const Products = [
     isRecommended: true,
   },
   {
-    id: 17,
+    _id: 17,
     name: "Brass Buddha Idol",
     price: 2499,
     oldPrice: 2999,
@@ -244,7 +244,7 @@ export const Products = [
     isRecommended: false,
   },
   {
-    id: 18,
+    _id: 18,
     name: "Handloom Cushion Cover Set",
     price: 799,
     oldPrice: 999,
@@ -256,7 +256,7 @@ export const Products = [
     isRecommended: true,
   },
   {
-    id: 33,
+    _id: 33,
     name: "Aarti Machine",
     price: 5599,
     oldPrice: 5999,
@@ -268,7 +268,7 @@ export const Products = [
     isRecommended: true,
   },
   {
-    id: 19,
+    _id: 19,
     name: "Organic Basmati Rice (5kg)",
     price: 899,
     oldPrice: 1099,
@@ -280,7 +280,7 @@ export const Products = [
     isRecommended: true,
   },
   {
-    id: 20,
+    _id: 20,
     name: "Cold Pressed Mustard Oil",
     price: 299,
     oldPrice: 399,
@@ -292,7 +292,7 @@ export const Products = [
     isRecommended: true,
   },
   {
-    id: 21,
+    _id: 21,
     name: "Organic Turmeric Powder",
     price: 219,
     oldPrice: 299,
@@ -304,7 +304,7 @@ export const Products = [
     isRecommended: false,
   },
   {
-    id: 22,
+    _id: 22,
     name: "Whole Wheat Atta (10kg)",
     price: 450,
     oldPrice: 599,
@@ -316,7 +316,7 @@ export const Products = [
     isRecommended: true,
   },
   {
-    id: 23,
+    _id: 23,
     name: "Raw Honey (500ml)",
     price: 349,
     oldPrice: 449,
@@ -328,7 +328,7 @@ export const Products = [
     isRecommended: true,
   },
   {
-    id: 24,
+    _id: 24,
     name: "Organic Green Tea",
     price: 299,
     oldPrice: 399,
@@ -340,7 +340,7 @@ export const Products = [
     isRecommended: false,
   },
   {
-    id: 25,
+    _id: 25,
     name: "Ashwagandha Churna",
     price: 299,
     oldPrice: 399,
@@ -352,7 +352,7 @@ export const Products = [
     isRecommended: true,
   },
   {
-    id: 26,
+    _id: 26,
     name: "Triphala Powder",
     price: 249,
     oldPrice: 349,
@@ -364,7 +364,7 @@ export const Products = [
     isRecommended: false,
   },
   {
-    id: 27,
+    _id: 27,
     name: "Brahmi Capsules",
     price: 399,
     oldPrice: 499,
@@ -376,7 +376,7 @@ export const Products = [
     isRecommended: true,
   },
   {
-    id: 28,
+    _id: 28,
     name: "Neem Oil (200ml)",
     price: 219,
     oldPrice: 299,
@@ -388,7 +388,7 @@ export const Products = [
     isRecommended: true,
   },
   {
-    id: 29,
+    _id: 29,
     name: "Aloe Vera Gel",
     price: 349,
     oldPrice: 449,
@@ -400,7 +400,7 @@ export const Products = [
     isRecommended: true,
   },
   {
-    id: 30,
+    _id: 30,
     name: "Chyawanprash (1kg)",
     price: 549,
     oldPrice: 699,
@@ -412,7 +412,7 @@ export const Products = [
     isRecommended: false,
   },
   {
-    id: 31,
+    _id: 31,
     name: "Home Made Ghee",
     price: 999,
     oldPrice: 1199,

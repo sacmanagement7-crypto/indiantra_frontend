@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
+import { ShopContext } from "../context/ShopContext";
 
 export default function CheckoutPage() {
   const [payment, setPayment] = useState("online");
+  const {checkoutCart} = useContext(ShopContext)
 
   return (
     <div className="max-w-6xl mx-auto p-6 lg:p-10 grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -158,7 +160,7 @@ export default function CheckoutPage() {
         </div>
 
         {/* Place Order Button */}
-        <button className="mt-8 w-full bg-yellow-500 hover:bg-yellow-600 transition-colors text-white font-semibold py-3 rounded-xl shadow-md">
+        <button onClick={()=>checkoutCart()} className="mt-8 w-full bg-yellow-500 hover:bg-yellow-600 transition-colors text-white font-semibold py-3 rounded-xl shadow-md">
           Place Order
         </button>
 

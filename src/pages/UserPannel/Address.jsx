@@ -1,21 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Plus } from "lucide-react";
+import api from "../../api/axios";
 
 const Address = () => {
-  const [addresses, setAddresses] = useState([
-    {
-      id: 1,
-      name: "Praveen Kumar",
-      phone: "9876543210",
-      street: "123 Swadeshi Market",
-      city: "Delhi",
-      state: "Delhi",
-      zip: "110001",
-      country: "India",
-      isDefault: true,
-    },
-  ]);
-
+  const [addresses, setAddresses] = useState([]);
   const [formVisible, setFormVisible] = useState(false);
   const [form, setForm] = useState({
     id: null,
@@ -28,64 +16,94 @@ const Address = () => {
     country: "",
     isDefault: false,
   });
-
   const [editing, setEditing] = useState(false);
+
+  // ✅ Load addresses from backend
+  useEffect(() => {
+    const fetchAddresses = async () => {
+      try {
+        const res = await api.get("/user/address");
+        setAddresses(res.data.addresses);
+        console.log(res.data.addresses)
+      } catch (error) {
+        console.error("❌ Failed to load addresses:", error);
+      }
+    };
+    fetchAddresses();
+  }, []);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSave = () => {
+  // ✅ Add or update
+  const handleSave = async () => {
     if (
-      !form.name ||
-      !form.phone ||
-      !form.street ||
-      !form.city ||
-      !form.state ||
-      !form.zip ||
-      !form.country
+      !form.name || !form.phone || !form.street ||
+      !form.city || !form.state || !form.zip || !form.country
     ) {
       alert("⚠️ Please fill all fields");
       return;
     }
 
-    if (editing) {
-      setAddresses((prev) =>
-        prev.map((addr) => (addr.id === form.id ? form : addr))
-      );
-    } else {
-      setAddresses((prev) => [...prev, { ...form, id: Date.now() }]);
-    }
+    try {
+      let res;
+      if (editing) {
+        // ✏️ Update existing address
+        res = await api.put(`/user/address/${form.id}`, form);
+      } else {
+        // ➕ Add new address
+        res = await api.post("/user/address", form);
+      }
 
-    setForm({
-      id: null,
-      name: "",
-      phone: "",
-      street: "",
-      city: "",
-      state: "",
-      zip: "",
-      country: "",
-      isDefault: false,
-    });
-    setEditing(false);
-    setFormVisible(false);
+      setAddresses(res.data.addresses);
+      alert(editing ? "✅ Address updated" : "✅ Address added");
+
+      setForm({
+        id: null,
+        name: "",
+        phone: "",
+        street: "",
+        city: "",
+        state: "",
+        zip: "",
+        country: "",
+        isDefault: false,
+      });
+      setEditing(false);
+      setFormVisible(false);
+    } catch (error) {
+      console.error("❌ Failed to save address:", error);
+    }
   };
 
+  // ✏️ Edit
   const handleEdit = (addr) => {
     setForm(addr);
     setEditing(true);
     setFormVisible(true);
   };
 
-  const handleDelete = (id) => {
-    setAddresses((prev) => prev.filter((addr) => addr.id !== id));
+  // 🗑 Delete
+  const handleDelete = async (id) => {
+    try {
+      const res = await api.delete(`/user/address/${id}`);
+      setAddresses(res.data.addresses);
+      alert("🗑 Address removed");
+    } catch (error) {
+      console.error("❌ Failed to delete address:", error);
+    }
   };
 
-  const handleSetDefault = (id) => {
-    setAddresses((prev) =>
-      prev.map((addr) => ({ ...addr, isDefault: addr.id === id }))
-    );
+  // ⭐ Set Default
+  const handleSetDefault = async (id) => {
+    try {
+      const res = await api.patch(`/user/address/${id}`);
+      setAddresses(res.data.addresses);
+      alert("⭐ Default address set");
+    } catch (error) {
+      console.error("❌ Failed to set default address:", error);
+    }
   };
 
   return (
@@ -113,10 +131,9 @@ const Address = () => {
         {/* Saved Addresses */}
         {addresses.map((addr) => (
           <div
-            key={addr.id}
+            key={addr._id}
             className="p-5 bg-white hover:shadow-lg hover:scale-[1.01] transition"
           >
-            {/* Header */}
             <div className="flex items-center justify-between mb-2">
               <h3 className="font-semibold text-lg text-gray-800">
                 {addr.name}
@@ -128,16 +145,12 @@ const Address = () => {
               )}
             </div>
 
-            {/* Address details */}
             <p className="text-sm text-gray-600 leading-relaxed">
               {addr.street}, {addr.city}, {addr.state} - {addr.zip},{" "}
               {addr.country}
             </p>
-            <p className="text-sm text-gray-600 mt-2">
-              📞 {addr.phone}
-            </p>
+            <p className="text-sm text-gray-600 mt-2">📞 {addr.phone}</p>
 
-            {/* Actions */}
             <div className="mt-3 text-sm text-blue-600">
               <button
                 onClick={() => handleEdit(addr)}
@@ -146,14 +159,14 @@ const Address = () => {
                 Edit
               </button>
               <button
-                onClick={() => handleDelete(addr.id)}
+                onClick={() => handleDelete(addr._id)}
                 className="hover:underline mr-3"
               >
                 Remove
               </button>
               {!addr.isDefault && (
                 <button
-                  onClick={() => handleSetDefault(addr.id)}
+                  onClick={() => handleSetDefault(addr._id)}
                   className="hover:underline"
                 >
                   Set as default

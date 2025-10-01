@@ -10,7 +10,7 @@ const Test = () => {
         <div>
             <div>{categories.join(" ")}</div>
             <div> {products.map((p) => (
-                <div key={p.id}>
+                <div key={p._id}>
                     {p.name} – ₹{p.price}
                 </div>
             ))}</div>

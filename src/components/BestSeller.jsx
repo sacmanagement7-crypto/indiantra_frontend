@@ -26,9 +26,9 @@ export default function BestSeller() {
       {/* Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
         {bestSellers.map((b) => (
-          <Link key={b.id} to={`/product/${b.id}`}>
+          <Link key={b._id} to={`/product/${b._id}`}>
           <div
-            key={b.id}
+            key={b._id}
             className="bg-white border border-gray-200 rounded-lg hover:shadow-md transition-all duration-300 p-4 flex flex-col relative"
           >
             {/* Discount Badge */}
@@ -43,7 +43,7 @@ export default function BestSeller() {
               <FaHeart
                 size={14}
                 className={`${
-                  wishlist.find((w) => w.id === b.id)
+                  wishlist.find((w) => w._id === b._id)
                     ? "text-red-500"
                     : "text-gray-600"
                 }`}

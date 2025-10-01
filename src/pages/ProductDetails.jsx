@@ -16,8 +16,10 @@ export default function ProductDetails() {
   const [user, setUser] = useState("I am");
 
   console.log(typeof (wishlist.length))
+  console.log(products)
 
-  const product = products.find((p) => p.id === Number(id));
+  const product = products.find((p) => p._id === id);
+  // const product = products.find((p) => p._id === Number(id));
 
   const prevSlide = () => {
     setCurrentIndex((prev) =>

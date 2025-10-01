@@ -52,7 +52,7 @@ export default function CartPage() {
             <div className="lg:col-span-2 space-y-5">
               {cart.map((item) => (
                 <div
-                  key={item.id}
+                  key={item._id}
                   className="flex bg-white p-5 border-b border-gray-200"
                 >
                   {/* Product Image */}
@@ -77,7 +77,7 @@ export default function CartPage() {
                       {/* Quantity Control */}
                       <div className="flex items-center border border-yellow-500 rounded-md overflow-hidden">
                         <button
-                          onClick={() => removeFromCart(item.id)}
+                          onClick={() => removeFromCart(item._id)}
                           className="px-3 py-1 hover:bg-yellow-100"
                         >
                           -
@@ -95,7 +95,7 @@ export default function CartPage() {
 
                       {/* Delete & Save for later */}
                       <button
-                        onClick={() => deleteFromCart(item.id)}
+                        onClick={() => deleteFromCart(item._id)}
                         className="text-blue-600 text-sm hover:underline"
                       >
                         Delete
@@ -103,7 +103,7 @@ export default function CartPage() {
                       <button
                         onClick={() => {
                           addToWishlist(item);
-                          deleteFromCart(item.id);
+                          deleteFromCart(item._id);
                         }}
                         className="text-blue-600 text-sm hover:underline"
                       >

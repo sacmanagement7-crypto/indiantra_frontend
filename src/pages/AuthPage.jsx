@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-import api from "../api/axios"; // ✅ import axios instance
+import api from "../api/axios"; 
+import { useNavigate } from "react-router";// ✅ import axios instance
 
 export default function AuthPage() {
+  const navigate = useNavigate();
+
   const [isLogin, setIsLogin] = useState(true);
+
 
   // Form state
   const [form, setForm] = useState({
@@ -31,8 +35,9 @@ export default function AuthPage() {
         });
         setMessage(`✅ Welcome back, ${res.data.name}`);
         localStorage.setItem("user", JSON.stringify(res.data));
-        localStorage.setItem("token",JSON.stringify(res.data.token))
+        localStorage.setItem("token",res.data.token)
         console.log(res.data) 
+        navigate('/account')
       } else {
         // 🆕 Register API
         const res = await api.post("/auth/register", form);

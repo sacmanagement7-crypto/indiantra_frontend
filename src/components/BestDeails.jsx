@@ -26,9 +26,9 @@ export default function BestDeals() {
       {/* Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
         {bestDeals.map((book) => (
-          <Link key={book.id} to={`/product/${book.id}`}>
+          <Link key={book._id} to={`/product/${book._id}`}>
           <div
-            key={book.id}
+            key={book._id}
             className="group bg-white hover:shadow-md transition p-3 flex flex-col relative"
           >
             {/* Discount Badge */}
