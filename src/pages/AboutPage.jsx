@@ -43,6 +43,47 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* About Us - Detailed Content */}
+      <section className="bg-white py-12">
+        <div className="max-w-6xl mx-auto px-4 space-y-8">
+          <h2 className="text-2xl md:text-3xl font-bold text-orange-600 text-center">
+            Swadeshi e-commerce
+          </h2>
+          <p className="text-gray-700 text-sm md:text-base leading-relaxed">
+            At Swadeshi e-commerce, we believe that every product carries a story—a story of hands that create, communities that nurture, and traditions that live on. Our platform was born with a simple yet powerful vision: to promote Swadeshi values by connecting India’s rural artisans, women entrepreneurs, and local industries directly with customers across the country and beyond.
+          </p>
+
+          <h3 className="text-xl font-bold text-green-700">The Heart of Our Mission</h3>
+          <p className="text-gray-700 text-sm md:text-base leading-relaxed">
+            Our initiative is powered by the women of Swayam Sahita Samuh, a self-help group of talented and determined ladies who channel their creativity into handmade products. Each item they make—whether it is handcrafted textiles, eco-friendly goods, home décor, or traditional crafts—represents not just skill, but also resilience, cultural pride, and self-reliance.
+          </p>
+          <p className="text-gray-700 text-sm md:text-base leading-relaxed">
+            By partnering with Sahkari Samiti and local industries, we have created a unique ecosystem that uplifts artisans, provides fair trade opportunities, and strengthens community bonds. This collaboration ensures that traditional skills are preserved while also providing modern market access to rural talents.
+          </p>
+
+          <h3 className="text-xl font-bold text-green-700">What Makes Us Different?</h3>
+          <ul className="list-disc list-inside text-gray-700 text-sm md:text-base space-y-2">
+            <li><span className="font-semibold">Women Empowerment at the Core:</span> Our platform enables women to achieve financial independence, dignity, and recognition for their work.</li>
+            <li><span className="font-semibold">Swadeshi First:</span> We are committed to the “Vocal for Local” movement by promoting products that are 100% Indian-made and rooted in heritage.</li>
+            <li><span className="font-semibold">Sustainable Choices:</span> Every product is eco-conscious, reflecting our responsibility towards the environment.</li>
+            <li><span className="font-semibold">Community Growth:</span> We don’t just sell; we reinvest in local talent, creating a cycle of progress and prosperity.</li>
+          </ul>
+
+          <h3 className="text-xl font-bold text-green-700">Our Vision</h3>
+          <p className="text-gray-700 text-sm md:text-base leading-relaxed">
+            We envision a future where rural artisans and women-led groups are celebrated as the backbone of India’s economy. A future where every handmade product finds its rightful place in the world market, not just as a commodity, but as a piece of Indian culture and tradition.
+          </p>
+
+          <h3 className="text-xl font-bold text-green-700">Our Promise to You</h3>
+          <p className="text-gray-700 text-sm md:text-base leading-relaxed">
+            When you shop with Swadeshi e-commerce, you are not just making a purchase—you are becoming a part of a movement. A movement that supports women, strengthens local industries, encourages sustainable living, and celebrates the spirit of Swadeshi Bharat.
+          </p>
+          <p className="text-gray-700 text-sm md:text-base leading-relaxed font-semibold">
+            Together, let us build a marketplace that values people as much as products, and traditions as much as trends. Choose Swadeshi. Support women. Celebrate Handmade.
+          </p>
+        </div>
+      </section>
+
       {/* Testimonials */}
       <section className="bg-gradient-to-r from-yellow-50 via-white to-green-50 py-12">
         <div className="max-w-6xl mx-auto px-4 text-center">

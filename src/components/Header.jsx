@@ -20,15 +20,29 @@ export default function Header() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser && storedUser !== "undefined") {
-      try {
-        setUser(JSON.parse(storedUser));
-      } catch (error) {
-        console.error("Invalid JSON in localStorage user:", error);
-        localStorage.removeItem("user"); // cleanup bad data
+    const checkUser = () => {
+      const storedUser = localStorage.getItem("user");
+      if (storedUser && storedUser !== "undefined") {
+        try {
+          const parsedUser = JSON.parse(storedUser);
+          setUser(parsedUser);
+        } catch (error) {
+          console.error("Invalid JSON in localStorage user:", error);
+          localStorage.removeItem("user");
+          setUser(null);
+        }
+      } else {
+        setUser(null); // no user logged in
       }
-    }
+    };
+
+    // check once immediately
+    checkUser();
+
+    // then poll every 1 second (1000ms)
+    const interval = setInterval(checkUser, 100);
+
+    return () => clearInterval(interval); // cleanup on unmount
   }, []);
 
 

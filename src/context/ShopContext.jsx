@@ -172,26 +172,34 @@ export function ShopProvider({ children }) {
     fetchData();
   }, []);
 
-  const checkoutCart = async (paymentMethod = "COD") => {
-    if (cart.length === 0) return alert('cart is empty');
-    const prevCart = [...cart];
-    setCart([]);
-    localStorage.setItem("cart", JSON.stringify([]));
+ const checkoutCart = async (addressId, paymentMethod = "COD") => {
+  if (cart.length === 0) return alert("Cart is empty");
+  if (!addressId) return alert("Please select an address");
 
-    try {
-      const res = await api.post("/order/checkout", { paymentMethod });
-      if (res.status === 200 && res.data.order) {
-        alert("Order placed successfully!");
-      } else {
-        alert("Checkout failed, please try again");
-      }
-    } catch (error) {
-      setCart(prevCart);
-      localStorage.setItem("cart", JSON.stringify(prevCart));
-      console.error("Checkout failed:", error.response?.data || error.message);
+  const prevCart = [...cart];
+  setCart([]);
+  localStorage.setItem("cart", JSON.stringify([]));
+
+  try {
+    const res = await api.post("/order/checkout", {
+      paymentMethod,
+      addressId,   // 👈 send selected address
+    });
+
+    if (res.status === 200 && res.data.order) {
+      alert("✅ Order placed successfully!");
+      return res.data.order;
+    } else {
       alert("Checkout failed, please try again");
     }
+  } catch (error) {
+    setCart(prevCart);
+    localStorage.setItem("cart", JSON.stringify(prevCart));
+    console.error("❌ Checkout failed:", error.response?.data || error.message);
+    alert("Checkout failed, please try again");
   }
+};
+
 
   return (
     <ShopContext.Provider

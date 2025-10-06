@@ -9,7 +9,7 @@ export default function ShopPage() {
   const location = useLocation();
 
   const [selectedCategory, setSelectedCategory] = useState("");
-  const [priceRange, setPriceRange] = useState([200, 6000]);
+  const [priceRange, setPriceRange] = useState([1, 6000]);
   const [sortOption, setSortOption] = useState("");
 
 
@@ -22,12 +22,12 @@ export default function ShopPage() {
     } else {
       setSelectedCategory("");
     }
-  }, [category, products]);
+  }, [category]);
 
   // 👉 Filter products dynamically from context
   let filteredProducts = products.filter((p) => {
     const inCategory =
-      selectedCategory === "All" || p.category === selectedCategory;
+      selectedCategory === "All" || p.category == selectedCategory;
     const inPriceRange =
       p.price >= priceRange[0] && p.price <= priceRange[1];
     return inCategory && inPriceRange;
@@ -79,6 +79,19 @@ export default function ShopPage() {
         <div>
           <h3 className="text-base font-semibold text-gray-800 mb-3">Categories</h3>
           <ul className="space-y-3 text-gray-700 text-sm">
+            <li
+              className="flex items-center gap-2 cursor-pointer hover:text-orange-600"
+              onClick={() => setSelectedCategory("All")}
+            >
+              <input
+                type="radio"
+                name="category"
+                checked={selectedCategory === "All"}
+                onChange={() => setSelectedCategory("All")}
+                className="accent-orange-500 cursor-pointer"
+              />
+              <span>All</span>
+            </li>
             {categories.map((cat, i) => (
               <li
                 key={i}
@@ -116,16 +129,7 @@ export default function ShopPage() {
               <FaTh size={14} />
             </button>
             {/* 👇 Uncomment if list view is needed */}
-            {/* <button
-        className={`p-2 rounded-lg shadow-sm transition ${
-          view === "list"
-            ? "bg-orange-500 text-white"
-            : "bg-gray-100 hover:bg-gray-200"
-        }`}
-        onClick={() => setView("list")}
-      >
-        <FaList size={14} />
-      </button> */}
+
           </div>
 
           {/* Sorting Dropdown */}

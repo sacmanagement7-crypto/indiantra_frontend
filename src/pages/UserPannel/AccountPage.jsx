@@ -85,7 +85,7 @@ export default function AccountPage() {
     <div className="max-w-6xl mx-auto p-6">
       {/* Header */}
       <h1 className="text-2xl md:text-3xl font-extrabold mb-10 text-gray-800">
-        👋 Hello, {user.name || "Guest"}
+        👋 Hello, {user.name}
       </h1>
 
       {/* Grid of sections */}

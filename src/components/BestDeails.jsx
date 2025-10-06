@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { ShopContext } from "../context/ShopContext";
 import { FaHeart } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 export default function BestDeals() {
   const { products, addToCart} = useContext(ShopContext);
@@ -25,53 +25,53 @@ export default function BestDeals() {
 
       {/* Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {bestDeals.map((book) => (
-          <Link key={book._id} to={`/product/${book._id}`}>
+        {bestDeals.map((product) => (
           <div
-            key={book._id}
+            key={product._id}
             className="group bg-white hover:shadow-md transition p-3 flex flex-col relative"
           >
             {/* Discount Badge */}
             <span className="absolute top-3 left-3 bg-green-600 text-white text-[10px] font-semibold px-2 py-0.5  z-5 rounded">
-              {book.discount}
+              {product.discount}
             </span>
 
           
+          <Link key={product._id} to={`/product/${product._id}`}>
 
             {/* Image */}
             <div className="overflow-hidden rounded-md">
               <img
-                src={book.images[0]}
-                alt={book.name}
+                src={product.images[0]}
+                alt={product.name}
                 className="w-full h-48 object-contain group-hover:scale-105 transition-transform duration-300"
               />
             </div>
+            </Link>
 
             {/* Details */}
             <div className="flex flex-col flex-grow mt-3">
               <h3 className="text-sm font-medium text-gray-900 line-clamp-2 min-h-[36px]">
-                {book.name}
+                {product.name}
               </h3>
 
               {/* Price */}
               <div className="mt-2 flex items-baseline gap-2">
                 <p className="text-gray-500 text-xs line-through">
-                  ₹{book.oldPrice}
+                  ₹{product.oldPrice}
                 </p>
                 <p className="text-lg font-bold text-orange-600">
-                  ₹{book.price}
+                  ₹{product.price}
                 </p>
               </div>
 
               {/* Add to Cart */}
               <button onClick={()=>{
-                addToCart(book)
+                addToCart(product)
               }} className="mt-auto w-full bg-yellow-400 hover:bg-yellow-500 text-black text-sm font-semibold py-2 rounded-md transition flex items-center justify-center border border-yellow-600">
                 Add to Cart
               </button>
             </div>
           </div>
-          </Link>
         ))}
       </div>
     </section>
