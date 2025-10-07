@@ -1,121 +1,146 @@
-import React from "react";
-import { FiArrowRight } from "react-icons/fi";
-import saree1 from "../assets/saree1.jpg"
-import saree2 from "../assets/saree2.jpg"
-import saree3 from "../assets/saree3.jpg"
+import React, { useState, useEffect, useContext } from 'react';
+import { ShoppingCart, Trash2, Plus, Minus, Tag, Clock, X } from 'lucide-react';
+import { ShopContext } from "../context/ShopContext";
 
-export default function GamerWorld() {
-  const products = [
-    {
-      id: 1,
-      title: "Bannarsi Saree...",
-      price: 18.73,
-      oldPrice: 27.27,
-      rating: 3,
-      img: `${saree1}`, // replace with real img
-    },
-    {
-      id: 2,
-      title: "Silk Saree...",
-      price: 17.79,
-      oldPrice: 24.55,
-      rating: 5,
-      img: `${saree2}`,
-    },
-    {
-      id: 3,
-      title: "Wedding Saree...",
-      price: 18.03,
-      oldPrice: 32.63,
-      rating: 5,
-      tag: "POPULAR",
-      img: `${saree3}`,
-    },
-  ];
+// Timer Component
+const TimerDisplay = ({ offerEndsAt }) => {
+  const [timeLeft, setTimeLeft] = useState({ hours: 0, minutes: 0, seconds: 0, expired: false });
+
+  useEffect(() => {
+    if (!offerEndsAt) return;
+
+    const offerTime = typeof offerEndsAt === 'string' ? new Date(offerEndsAt).getTime() : offerEndsAt;
+
+    const interval = setInterval(() => {
+      const remaining = offerTime - Date.now();
+      if (remaining > 0) {
+        const hours = Math.floor(remaining / (1000 * 60 * 60));
+        const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
+        setTimeLeft({ hours, minutes, seconds, expired: false });
+      } else {
+        setTimeLeft({ hours: 0, minutes: 0, seconds: 0, expired: true });
+      }
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [offerEndsAt]);
+
+  if (timeLeft.expired) {
+    return (
+      <div className="flex items-center gap-1 text-red-600 text-xs font-bold">
+        <Clock className="w-3 h-3" />
+        <span>EXPIRED</span>
+      </div>
+    );
+  }
 
   return (
-    <section className="w-full py-14 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-4">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl font-bold text-gray-900">Saree</h2>
-          <button className="flex items-center gap-2 text-gray-800 font-medium hover:text-yellow-500">
-            View More <FiArrowRight />
-          </button>
+    <div className="flex items-center gap-2">
+      <Clock className="w-4 h-4 text-orange-600 animate-pulse" />
+      <div className="flex gap-1 text-xs font-bold">
+        <span className="bg-gradient-to-br from-orange-500 to-amber-600 text-white px-2 py-1 rounded shadow-md min-w-[28px] text-center">
+          {String(timeLeft.hours).padStart(2, '0')}
+        </span>
+        <span className="text-orange-600 font-black">:</span>
+        <span className="bg-gradient-to-br from-orange-500 to-amber-600 text-white px-2 py-1 rounded shadow-md min-w-[28px] text-center">
+          {String(timeLeft.minutes).padStart(2, '0')}
+        </span>
+        <span className="text-orange-600 font-black">:</span>
+        <span className="bg-gradient-to-br from-orange-500 to-amber-600 text-white px-2 py-1 rounded shadow-md min-w-[28px] text-center">
+          {String(timeLeft.seconds).padStart(2, '0')}
+        </span>
+      </div>
+    </div>
+  );
+};
+
+// Main Component
+const GamerWorld = () => {
+  const { products, addToCart } = useContext(ShopContext);
+
+  // Show only 4 products
+  const onlyFour = products?.slice(0, 4) || [];
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-yellow-50 to-orange-50 z-1">
+
+      <main className="max-w-7xl mx-auto px-4 py-8">
+        {/* Hero Banner */}
+        <div className="bg-gradient-to-r from-yellow-400 via-orange-400 to-amber-500 rounded-3xl shadow-2xl p-8 mb-8 relative overflow-hidden">
+          <div className="absolute inset-0 bg-black opacity-5"></div>
+          <div className="relative z-10">
+            <h2 className="text-2xl font-bold text-white mb-1">🔥 Lightning Deals!</h2>
+            <p className="text-sm text-white font-medium">Grab them before time runs out!</p>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-          {/* Left category box */}
-          <div className="bg-blue-100 rounded-lg p-6 flex flex-col justify-between relative">
-            <div>
-              <h3 className="font-semibold text-lg mb-4">Best Sarees</h3>
-              <ul className="space-y-2 text-gray-700">
-                <li>Traditional</li>
-                <li>Silk</li>
-                <li>Paithani</li>
-                <li>Wedding</li>
-              </ul>
-              <button className="mt-4 flex items-center gap-2 text-gray-900 font-medium hover:text-yellow-500">
-                Shop Now <FiArrowRight />
-              </button>
-            </div>
-            <img
-              src="https://via.placeholder.com/200x200?text=Watch"
-              alt="watch"
-              className="absolute bottom-0 right-2 w-32"
-            />
-          </div>
-
-          {/* Product cards */}
-          {products.map((product) => (
+        {/* Products Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          {onlyFour.map(product => (
             <div
               key={product._id}
-              className="bg-white rounded-lg shadow-md hover:shadow-lg transition p-5 relative"
+              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all border-2 border-amber-100 flex flex-col"
             >
-              {/* Tag */}
-              {product.tag && (
-                <span className="absolute top-3 right-3 bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
-                  {product.tag}
+              {/* Product Image */}
+              <div className="w-full h-48 relative">
+                <img
+                  src={product.images?.[0]}
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                />
+                <span className="absolute top-3 right-3 px-2 py-1 bg-gradient-to-r from-orange-100 to-amber-100 text-orange-700 text-xs font-bold rounded-full border border-orange-200">
+                  {product.category}
                 </span>
-              )}
-
-              {/* Image */}
-              <img
-                src={product.img}
-                alt={product.title}
-                className="mx-auto mb-4 h-40 object-contain"
-              />
-
-              {/* Stars */}
-              <div className="flex text-yellow-500 text-sm mb-2">
-                {Array.from({ length: product.rating }).map((_, i) => (
-                  <span key={i}>★</span>
-                ))}
-                {Array.from({ length: 5 - product.rating }).map((_, i) => (
-                  <span key={i} className="text-gray-300">
-                    ★
-                  </span>
-                ))}
               </div>
 
-              {/* Title */}
-              <h4 className="text-gray-800 font-medium text-sm mb-2">
-                {product.title}
-              </h4>
+              {/* Product Details */}
+              <div className="p-4 flex flex-col flex-grow">
+                <h3 className="text-base font-bold text-gray-800 mb-1 line-clamp-2">{product.name}</h3>
+                <p className="text-xs text-gray-600 mb-3 line-clamp-2">{product.shortdescription}</p>
 
-              {/* Price */}
-              <div className="flex items-center gap-2">
-                <span className="text-gray-400 line-through text-sm">
-                  ${product.oldPrice}
-                </span>
-                <span className="text-red-500 font-semibold">
-                  ${product.price}
-                </span>
+                {/* Timer */}
+                {product.offerEndsAt && (
+                  <div className="bg-gradient-to-r from-orange-50 to-amber-50 px-2 py-1.5 rounded-lg border border-orange-200 flex items-center gap-1.5 mb-3">
+                    <span className="text-orange-700 font-semibold text-xs">Ends in:</span>
+                    <TimerDisplay offerEndsAt={product.offerEndsAt} />
+                  </div>
+                )}
+
+                {/* Price & Discount */}
+                <div className="mb-3 flex-grow">
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="text-xl font-black bg-gradient-to-r from-orange-600 to-amber-600 bg-clip-text text-transparent">
+                      ₹{product.price}
+                    </span>
+                    {product.oldPrice && (
+                      <span className="text-xs text-gray-400 line-through font-medium">
+                        ₹{product.oldPrice}
+                      </span>
+                    )}
+                  </div>
+                  {product.discount && (
+                    <span className="inline-flex items-center gap-1 bg-gradient-to-r from-green-500 to-emerald-600 text-white px-2 py-0.5 rounded-full text-xs font-bold shadow-sm mt-1">
+                      <Tag className="w-3 h-3" />
+                      {product.discount}
+                    </span>
+                  )}
+                </div>
+
+                {/* Add to Cart */}
+                <button
+                  onClick={() => addToCart(product)}
+                  className="w-full bg-gradient-to-r from-orange-500 to-amber-500 text-white px-4 py-2 rounded-lg font-bold text-sm hover:shadow-lg transition-all hover:scale-105"
+                >
+                  Add to Cart
+                </button>
               </div>
             </div>
           ))}
         </div>
-      </div>
-    </section>
+      </main>
+    </div>
   );
-}
+};
+
+export default GamerWorld;

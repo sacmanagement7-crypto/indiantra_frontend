@@ -36,7 +36,7 @@ export default function CategorySection() {
         className="custom-swiper"
       >
         {categories.map((cat, idx) => (
-          <SwiperSlide key={cat.id}>
+          <SwiperSlide key={cat._id}>
             <div className="flex flex-col items-center text-center group">
               {/* Category Tile */}
               <div

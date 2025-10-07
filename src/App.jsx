@@ -24,6 +24,10 @@ import ProtectedRoute from './components/protectedRoute'
 import FAQPage from './pages/FAQPage'
 import Journey from './pages/Journey'
 import Thankyoupage from "./pages/ThankyouPage"
+import ContactUs from './pages/ContactUs'
+import TermsPage from './pages/TermsPage'
+import BlogPage from './pages/BlogPage'
+import VendorStatus from './pages/VendorStatus'
 
 const App = () => {
   const location = useLocation();
@@ -54,6 +58,10 @@ const App = () => {
         <Route path='/account/support' element={<ProtectedRoute><Orders/></ProtectedRoute>}/>
         <Route path='/journey' element={<Journey/>}/>
         <Route path='/Thankyou' element={<Thankyoupage/>}/>
+        <Route path='/contact' element={<ContactUs/>}/>
+        <Route path='/terms' element={<TermsPage/>}/>
+        <Route path='/blog' element={<BlogPage/>}/>
+        <Route path='/vendor/status/:id' element={<VendorStatus/>}/>
        </Routes>
        {!hideHeaderFooter && <Footer/>}
        

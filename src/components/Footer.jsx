@@ -19,8 +19,8 @@ export default function Footer() {
         <div>
           <h3 className="font-semibold mb-4 text-lg">Features</h3>
           <ul className="space-y-2 text-sm">
-            <li><a href="#" className="hover:text-yellow-300 transition">About Us</a></li>
-            <li><a href="#" className="hover:text-yellow-300 transition">Terms & Conditions</a></li>
+            <li><a href="/about" className="hover:text-yellow-300 transition">About Us</a></li>
+            <li><a href="/terms" className="hover:text-yellow-300 transition">Terms & Conditions</a></li>
             <li><a href="#" className="hover:text-yellow-300 transition">Best Products</a></li>
           </ul>
         </div>
@@ -41,7 +41,7 @@ export default function Footer() {
           <ul className="space-y-2 text-sm">
             <li><a href="#" className="hover:text-yellow-300 transition">Flash Sale</a></li>
             <li><a href="/faqs" className="hover:text-yellow-300 transition">FAQ</a></li>
-            <li><a href="#" className="hover:text-yellow-300 transition">Support</a></li>
+            <li><a href="/support" className="hover:text-yellow-300 transition">Support</a></li>
           </ul>
         </div>
       </div>

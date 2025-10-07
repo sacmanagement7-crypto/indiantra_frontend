@@ -85,7 +85,7 @@ export default function Orders() {
           <p className="text-gray-600">Track and manage your orders</p>
         </div>
 
-        {orders.length === 0 ? (
+        {orders?.length === 0 ? (
           <div className="bg-white rounded-2xl shadow-sm border p-12 text-center">
             <Package className="w-16 h-16 text-gray-400 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-gray-900 mb-2">No orders yet</h3>
@@ -96,7 +96,7 @@ export default function Orders() {
           </div>
         ) : (
           <div className="space-y-6">
-            {orders.map((order) => {
+            {orders?.map((order) => {
               const statusConfig = getStatusConfig(order.status);
               const StatusIcon = statusConfig.icon;
 
@@ -132,34 +132,34 @@ export default function Orders() {
                   <div className="p-6">
                     {/* Items */}
                     <div className="space-y-4 mb-6">
-                      {order.items.map((item, idx) => (
+                      {order?.items?.map((item, idx) => (
                         <div
                           key={idx}
                           className="flex items-start gap-4 p-4 rounded-xl bg-gray-50 hover:bg-gray-100 transition"
                         >
                           <div className="flex-shrink-0">
                             <img
-                              src={item.productId.images[0] || "https://via.placeholder.com/100"}
-                              alt={item.productId.name}
+                              src={item.productId?.images[0] || "https://via.placeholder.com/100"}
+                              alt={item.productId?.name}
                               className="w-24 h-24 object-cover rounded-lg border-2 border-white shadow-sm"
                             />
                           </div>
                           <div className="flex-1 min-w-0">
                             <h3 className="text-lg font-semibold text-gray-900 mb-1">
-                              {item.productId.name}
+                              {item?.productId?.name}
                             </h3>
                             <p className="text-sm text-gray-500 mb-2">
-                              Category: {item.productId.category}
+                              Category: {item?.productId?.category}
                             </p>
                             <div className="flex items-center gap-4 text-sm">
-                              <span className="text-gray-600">Qty: {item.quantity}</span>
+                              <span className="text-gray-600">Qty: {item?.quantity}</span>
                               <span className="text-gray-400">•</span>
-                              <span className="text-gray-600">₹{item.price} each</span>
+                              <span className="text-gray-600">₹{item?.price} each</span>
                             </div>
                           </div>
                           <div className="flex-shrink-0 text-right">
                             <p className="text-lg font-bold text-gray-900">
-                              ₹{item.price * item.quantity}
+                              ₹{item?.price * item?.quantity}
                             </p>
                           </div>
                         </div>
