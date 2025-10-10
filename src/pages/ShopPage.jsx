@@ -1,14 +1,14 @@
 import { useState, useContext, useEffect } from "react";
 import { FaTh, FaList } from "react-icons/fa";
 import { ShopContext } from "../context/ShopContext";
-import { Link, useLocation } from "react-router";
+import { Link, useLocation } from "react-router-dom";
 
 export default function ShopPage() {
   const { categories, products, addToCart } = useContext(ShopContext);
   const [view, setView] = useState("grid");
   const location = useLocation();
 
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const [priceRange, setPriceRange] = useState([1, 6000]);
   const [sortOption, setSortOption] = useState("");
 
@@ -20,14 +20,14 @@ export default function ShopPage() {
     if (category) {
       setSelectedCategory(category);
     } else {
-      setSelectedCategory("");
+      setSelectedCategory("All");
     }
   }, [category]);
 
   // 👉 Filter products dynamically from context
   let filteredProducts = products.filter((p) => {
     const inCategory =
-      selectedCategory === "All" || p.category == selectedCategory;
+      selectedCategory === "All" || p.category === selectedCategory;
     const inPriceRange =
       p.price >= priceRange[0] && p.price <= priceRange[1];
     return inCategory && inPriceRange;
@@ -165,8 +165,8 @@ export default function ShopPage() {
                 {/* Product Image */}
                 <div className="w-full h-48 bg-gray-50 rounded-lg overflow-hidden flex items-center justify-center">
                   <img
-                    src={p.images[0]}
-                    alt={p.name}
+                    src={p?.images[0]}
+                    alt={p?.name}
                     className="h-full w-full object-cover hover:scale-120 transition duration-300"
                   />
                 </div>

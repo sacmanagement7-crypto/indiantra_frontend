@@ -1,34 +1,41 @@
 import React, { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
 import { FaTrash, FaHeart, FaArrowLeft } from "react-icons/fa";
-import { NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 
 export default function CartPage() {
   const { cart, removeFromCart, addToCart, deleteFromCart, addToWishlist } =
     useContext(ShopContext);
 
-  const [user,setUser] = useState({});
+  const [user, setUser] = useState({});
 
   const navigate = useNavigate();
 
-  useEffect(()=>{
-     const user =  localStorage.getItem('user');
-     setUser(user)
-  },[])
+  useEffect(() => {
+    const user = localStorage.getItem('user');
+    setUser(user)
+  }, [])
 
   // 🧮 Calculate totals
-  const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+  const subtotal = cart.reduce((sum, item) => {
+    const product = item.productId;
+    return sum + (product?.price || 0) * (item.quantity || 1);
+  }, 0);
   const discount = subtotal > 2000 ? 200 : 0;
   const tax = subtotal * 0.05;
   const total = subtotal - discount + tax;
 
-  const handleproceedtopay = ()=>{
-    if(!user){
-      alert('login first')
-    }else{
-      navigate('/checkout')
+  const handleproceedtopay = () => {
+    if (!user) {
+      toast.warn("Please login first to proceed!", {
+        position: "top-right",
+      });
+      return;
     }
+    navigate('/checkout');
   }
 
   return (
@@ -50,80 +57,78 @@ export default function CartPage() {
           <div className="grid lg:grid-cols-3 gap-8">
             {/* 🟢 Left: Cart Items */}
             <div className="lg:col-span-2 space-y-5">
-              {cart.map((item) => (
-                <div
-                  key={item._id}
-                  className="flex bg-white p-5 border-b border-gray-200"
-                >
-                  {/* Product Image */}
-                  <img
-                    src={item.images[0]}
-                    alt={item.name}
-                    className="w-32 h-32 object-contain"
-                  />
+              {cart.map((item) => {
+                const product = item.productId;
+                 console.log(item);
+                return (
+                  <div key={item._id} className="flex bg-white p-5 border-b border-gray-200">
+                    {/* Product Image */}
+                    <img
+                      src={product?.images?.[0] || "/placeholder.jpg"}
+                      alt={product?.name}
+                      className="w-32 h-32 object-contain"
+                    />
 
-                  {/* Product Details */}
-                  <div className="flex-1 ml-6">
-                    <h2 className="font-medium text-gray-900 text-lg line-clamp-2">
-                      {item.name}
-                    </h2>
+                    {/* Product Details */}
+                    <div className="flex-1 ml-6">
+                      <h2 className="font-medium text-gray-900 text-lg line-clamp-2">
+                        {product?.name}
+                      </h2>
+                      <p className="text-green-600 text-sm mt-1">In stock</p>
+                      <p className="text-xs text-gray-600">Eligible for FREE Shipping</p>
 
-                    {/* Stock + Shipping Info (optional placeholders) */}
-                    <p className="text-green-600 text-sm mt-1">In stock</p>
-                    <p className="text-xs text-gray-600">Eligible for FREE Shipping</p>
+                      <div className="flex items-center gap-4 mt-3">
+                        {/* Quantity Control */}
+                        <div className="flex items-center border border-yellow-500 rounded-md overflow-hidden">
+                          <button
+                            onClick={() => removeFromCart(product._id)}
+                            className="px-3 py-1 hover:bg-yellow-100"
+                          >
+                            -
+                          </button>
+                          <span className="px-4 py-1 font-medium text-gray-800 bg-white">
+                            {item.quantity}
+                          </span>
+                          <button
+                            onClick={() => addToCart(product)}
+                            className="px-3 py-1 hover:bg-yellow-100"
+                          >
+                            +
+                          </button>
+                        </div>
 
-                    {/* Quantity & Actions */}
-                    <div className="flex items-center gap-4 mt-3">
-                      {/* Quantity Control */}
-                      <div className="flex items-center border border-yellow-500 rounded-md overflow-hidden">
                         <button
-                          onClick={() => removeFromCart(item._id)}
-                          className="px-3 py-1 hover:bg-yellow-100"
+                          onClick={() => deleteFromCart(product._id)}
+                          className="text-blue-600 text-sm hover:underline"
                         >
-                          -
+                          Delete
                         </button>
-                        <span className="px-4 py-1 font-medium text-gray-800 bg-white">
-                          {item.qty}
-                        </span>
                         <button
-                          onClick={() => addToCart(item)}
-                          className="px-3 py-1 hover:bg-yellow-100"
+                          onClick={() => {
+                            addToWishlist(product);
+                            deleteFromCart(product._id);
+                          }}
+                          className="text-blue-600 text-sm hover:underline"
                         >
-                          +
+                          Save for later
                         </button>
                       </div>
+                    </div>
 
-                      {/* Delete & Save for later */}
-                      <button
-                        onClick={() => deleteFromCart(item._id)}
-                        className="text-blue-600 text-sm hover:underline"
-                      >
-                        Delete
-                      </button>
-                      <button
-                        onClick={() => {
-                          addToWishlist(item);
-                          deleteFromCart(item._id);
-                        }}
-                        className="text-blue-600 text-sm hover:underline"
-                      >
-                        Save for later
-                      </button>
+                    {/* Price */}
+                    <div className="text-right ml-6">
+                      <p className="text-lg font-bold text-gray-900">₹{product?.price}</p>
+                      {product?.oldPrice && (
+                        <p className="text-sm text-gray-500 line-through">₹{product?.oldPrice}</p>
+                      )}
+                      {product?.discount && (
+                        <p className="text-xs text-red-600 font-semibold">{product?.discount}</p>
+                      )}
                     </div>
                   </div>
+                );
+              })}
 
-                  {/* Price Section */}
-                  <div className="text-right ml-6">
-                    <p className="text-lg font-bold text-gray-900">₹{item.price}</p>
-                    {item.oldPrice && (
-                      <p className="text-sm text-gray-500 line-through">₹{item.oldPrice}</p>
-                    )}
-                    {item.discount && (
-                      <p className="text-xs text-red-600 font-semibold">{item.discount}% off</p>
-                    )}
-                  </div>
-                </div>
-              ))}
             </div>
 
             {/* 🟡 Right: Order Summary */}
@@ -150,7 +155,7 @@ export default function CartPage() {
               </div>
 
               {/* ✅ Checkout Button */}
-              <button onClick={()=>{
+              <button onClick={() => {
                 handleproceedtopay()
               }} className="w-full bg-yellow-400 hover:bg-yellow-500 text-gray-900 py-2 rounded-md font-semibold transition">
                 Proceed to Buy

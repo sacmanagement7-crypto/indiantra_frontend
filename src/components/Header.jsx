@@ -6,9 +6,10 @@ import { useContext } from "react";
 import logo from "../assets/logo.png";
 import { ShopContext } from "../context/ShopContext";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
 
 export default function Header() {
-  const { categories, products, cart, wishlist } = useContext(ShopContext);
+  const { categories, products, cart, wishlist, setWishlist, setCart } = useContext(ShopContext);
   const [open, setOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [catOpen, setCatOpen] = useState(false);
@@ -67,8 +68,16 @@ export default function Header() {
 
   const handleLogout = () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
+    localStorage.removeItem("cart");
+    localStorage.removeItem("wishlist");
+
     setUser(null);
-    setMessage("👋 Logged out");
+    setCart([]);
+    setWishlist([]);
+    toast.success("👋 Logged out successfully!");
+
+    navigate('/');
   };
   return (
     <header className="w-full font-sans text-sm text-gray-700 border-b bg-[#ffffff] sticky top-0 z-10">
@@ -123,7 +132,7 @@ export default function Header() {
             <NavLink to={'/cart'}><FaShoppingBag className="cursor-pointer" /></NavLink>
             {cart.length > 0 && (
               <span className="absolute -top-3 -right-3 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                {cart.reduce((sum, item) => sum + item.qty, 0)}
+                {cart.reduce((sum, item) => sum + item.quantity, 0)}
               </span>
             )}
           </div>
