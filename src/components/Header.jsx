@@ -4,6 +4,7 @@ import { MdKeyboardArrowRight } from "react-icons/md";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import logo from "../assets/logo.png";
+import logoimg from "../../public/logo_img.png"
 import { ShopContext } from "../context/ShopContext";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
@@ -64,7 +65,6 @@ export default function Header() {
       alert("❌ No product found!");
     }
   }
-  console.log(user);
 
   const handleLogout = () => {
     localStorage.removeItem("user");
@@ -86,7 +86,7 @@ export default function Header() {
         {/* Logo */}
         <NavLink to="/">
           <div className="flex items-center">
-            <img src={logo} alt="Logo" className="h-[45px] lg:h-[55px] w-auto mb-3" />
+            <img src={logoimg} alt="Logo" className="h-[45px] lg:h-[55px] w-auto mb-3" />
           </div>
         </NavLink>
 

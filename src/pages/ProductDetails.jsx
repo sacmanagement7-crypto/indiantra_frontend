@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ShopContext } from "../context/ShopContext";
+import api from "../api/axios";
 // import { AuthContext } from "../context/AuthContext"; // 🔹 for login check
 
 export default function ProductDetails() {
@@ -8,15 +9,12 @@ export default function ProductDetails() {
   const { products } = useContext(ShopContext);
   const { addToCart } = useContext(ShopContext);
   const { cart } = useContext(ShopContext);
-  const [index,setIndex] = useState(0);
+  const [index, setIndex] = useState(0);
 
   const { wishlist, addToWishlist } = useContext(ShopContext);
   // const { user } = useContext(AuthContext); // 🔹 get logged-in user
 
   const [user, setUser] = useState("I am");
-
-  console.log(typeof (wishlist.length))
-  console.log(products)
 
   const product = products.find((p) => p._id === id);
   // const product = products.find((p) => p._id === Number(id));
@@ -34,50 +32,62 @@ export default function ProductDetails() {
   };
 
   // ⭐ Reviews State
-  const [reviews, setReviews] = useState([
-    {
-      id: 1,
-      name: "Amit Sharma",
-      rating: 5,
-      comment: "Amazing product! Great quality and fast delivery.",
-      date: "Jan 15, 2025",
-    },
-    {
-      id: 2,
-      name: "Sneha Patel",
-      rating: 4,
-      comment: "Very useful, worth the price. Packaging could be better.",
-      date: "Feb 5, 2025",
-    },
-    {
-      id: 3,
-      name: "Rahul Verma",
-      rating: 3,
-      comment: "Good but expected a bit more durability.",
-      date: "Feb 20, 2025",
-    },
-  ]);
+  const [reviews, setReviews] = useState([]);
 
   // ⭐ New Review State
   const [comment, setComment] = useState("");
-  const [rating, setRating] = useState(5);
+  const [rating, setRating] = useState(0);
 
-  const handleReviewSubmit = (e) => {
-    e.preventDefault();
-    if (!comment.trim()) return;
+   useEffect(() => {
+    const fetchReviews = async () => {
+      if (!product) return;
+      try {
+        const res = await api.get(`/${product._id}/review`);
+        setReviews(res.data.reviews || []);
+      } catch (error) {
+        console.error("Failed to fetch reviews:", error);
+      }
+    };
+    fetchReviews();
+  }, [product]);
 
+ const handleReviewSubmit = async (e) => {
+  e.preventDefault();
+
+  if (!comment.trim() || rating === 0) {
+    alert("Please provide a rating and comment.");
+    return;
+  }
+
+  try {
     const newReview = {
-      id: reviews.length + 1,
-      name: user?.name || "Guest",
-      rating,
+      rating: rating,
       comment,
-      date: new Date().toLocaleDateString(),
+      date: new Date().toISOString(), // ISO format ensures MongoDB Date works
     };
 
-    setReviews([newReview, ...reviews]);
+    const token = localStorage.getItem("token");
+
+    // Send productId in the URL, not in the body
+    const res = await api.post(
+      `/${product._id}/review`, // assuming backend route: /reviews/:productId
+      newReview,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    setReviews([res.data.review, ...reviews]);
     setComment("");
-    setRating(5);
-  };
+    setRating(0);
+  } catch (error) {
+    console.error("Failed to submit review:", error);
+    alert("Failed to submit review. Try again later.");
+  }
+};
+
 
   if (!product) {
     return (
@@ -109,7 +119,7 @@ export default function ProductDetails() {
                 key={idx}
                 src={img}
                 alt={`thumb-${idx}`}
-                onClick={()=>setIndex(idx)}
+                onClick={() => setIndex(idx)}
                 className="w-14 h-14 border rounded cursor-pointer hover:border-orange-500 object-contain"
               />
             ))}
@@ -223,48 +233,67 @@ export default function ProductDetails() {
       </div>
 
       {/* ⭐ Reviews Section */}
-      <div className="mt-12 bg-[#ffffff] shadow p-6">
-        <h2 className="text-xl font-semibold text-gray-800 mb-5">Customer Reviews</h2>
+      <div className="mt-16 bg-white rounded-2xl shadow-lg p-8">
+        {/* Title */}
+        <h2 className="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+          💬 Customer Reviews
+        </h2>
 
-        {/* 🔹 Review Form (only if logged in) */}
+        {/* Review Form */}
         {user ? (
-          <form onSubmit={handleReviewSubmit} className="mb-8 space-y-4">
-            <div>
+          <form
+            onSubmit={handleReviewSubmit}
+            className="mb-10 bg-gradient-to-br from-orange-50 to-yellow-50 border border-orange-200 rounded-xl p-5 shadow-sm"
+          >
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">
+              Write a Review ✍️
+            </h3>
+
+            {/* Rating */}
+            <div className="mb-4">
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Rating
               </label>
               <select
                 value={rating}
                 onChange={(e) => setRating(Number(e.target.value))}
-                className="w-32 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                className="w-36 border border-gray-300 rounded-lg px-3 py-2 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-orange-400"
               >
-                <option value={5}>⭐⭐⭐⭐⭐</option>
-                <option value={4}>⭐⭐⭐⭐</option>
-                <option value={3}>⭐⭐⭐</option>
-                <option value={2}>⭐⭐</option>
-                <option value={1}>⭐</option>
+                <option value={0}>-- Select Rating --</option>  {/* ✅ Not disabled */}
+                <option value={5}>⭐⭐⭐⭐⭐ (Excellent)</option>
+                <option value={4}>⭐⭐⭐⭐ (Good)</option>
+                <option value={3}>⭐⭐⭐ (Average)</option>
+                <option value={2}>⭐⭐ (Poor)</option>
+                <option value={1}>⭐ (Terrible)</option>
               </select>
             </div>
 
-            <div>
+            {/* Comment */}
+            <div className="mb-5">
               <textarea
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
-                placeholder="Write your review..."
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400"
+                placeholder="Share your experience with this product..."
+                className="w-full border border-gray-300 rounded-lg px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-orange-400 resize-none"
                 rows={3}
               />
             </div>
 
+            {/* Submit Button */}
             <button
               type="submit"
-              className="px-5 py-2 bg-orange-500 text-white text-sm font-medium rounded-lg shadow hover:bg-orange-600 transition"
+              disabled={rating === 0 || !comment.trim()}
+              className={`px-6 py-2.5 rounded-lg text-sm font-semibold shadow 
+    ${rating === 0 || !comment.trim()
+                  ? "bg-gray-300 cursor-not-allowed"
+                  : "bg-gradient-to-r from-orange-500 to-red-500 text-white hover:scale-[1.02] transition-transform duration-200"}
+  `}
             >
-              Submit Review
+              🚀 Submit Review
             </button>
           </form>
         ) : (
-          <p className="text-gray-500 mb-6 text-sm">
+          <p className="text-gray-500 mb-8 text-sm bg-gray-50 border border-gray-200 p-4 rounded-lg text-center">
             🔒 Please{" "}
             <span className="text-orange-600 font-medium cursor-pointer hover:underline">
               login
@@ -273,33 +302,45 @@ export default function ProductDetails() {
           </p>
         )}
 
-        {/* 🔹 Show All Reviews */}
+        {/* Reviews List */}
         <div className="space-y-6">
-          {reviews.map((review) => (
-            <div
-              key={review.id}
-              className="border border-gray-200 rounded-lg p-4 shadow-sm hover:shadow-md transition"
-            >
-              {/* Top Row: User + Date */}
-              <div className="flex items-center justify-between">
-                <h3 className="font-semibold text-gray-900">{review.name}</h3>
-                <span className="text-xs text-gray-500">{review.date}</span>
-              </div>
-
-              {/* Star Rating */}
-              <div className="flex items-center mt-1 text-yellow-400 text-sm">
-                {"⭐".repeat(review.rating)}{" "}
-                <span className="text-gray-300">
-                  {"⭐".repeat(5 - review.rating)}
-                </span>
-              </div>
-
-              {/* Comment */}
-              <p className="mt-3 text-gray-700 text-sm leading-relaxed">
-                {review.comment}
-              </p>
+          {reviews.length === 0 ? (
+            <div className="text-center py-10 text-gray-500 bg-gray-50 rounded-xl border border-gray-200">
+              No reviews yet. Be the first to share your thoughts! 🌟
             </div>
-          ))}
+          ) : (
+            reviews.map((review) => (
+              <div
+                key={review._id}
+                className="border border-gray-200 bg-gradient-to-br from-gray-50 to-white rounded-xl p-5 shadow-sm hover:shadow-md transition"
+              >
+                {/* Header */}
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <div className="w-9 h-9 bg-orange-100 text-orange-600 flex items-center justify-center rounded-full font-bold">
+                      {review.userId?.name?.charAt(0).toUpperCase()}
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-gray-900 text-sm">
+                        {review.userId.name}
+                      </h3>
+                      <p className="text-xs text-gray-500">{review.date}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center text-yellow-400 text-sm">
+                    <span className="text-gray-300">
+                      {"⭐".repeat(review.rating)}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Comment */}
+                <p className="mt-3 text-gray-700 text-sm leading-relaxed">
+                  {review.comment}
+                </p>
+              </div>
+            ))
+          )}
         </div>
       </div>
 

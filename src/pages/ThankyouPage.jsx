@@ -1,135 +1,164 @@
-import React from "react"; 
-import { CheckCircle, Package, CreditCard, MapPin, Hash, ShoppingBag, Home } from "lucide-react"; 
- 
-const ThankyouPage = ({ order }) => { 
-  return ( 
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 px-4 py-12 pt-24"> 
-      {/* Success Animation Container */}
-      <div className="bg-white rounded-3xl shadow-2xl p-8 md:p-12 max-w-2xl w-full relative overflow-hidden z-1">
-        {/* Decorative Elements */}
-        <div className="absolute top-0 right-0 w-40 h-40 bg-green-100 rounded-full -mr-20 -mt-20 opacity-50"></div>
-        <div className="absolute bottom-0 left-0 w-32 h-32 bg-emerald-100 rounded-full -ml-16 -mb-16 opacity-50"></div>
-        
-        {/* Content */}
-        <div className="relative z-10">
-          {/* Success Icon */}
+import React from "react";
+import {
+  CheckCircle,
+  Package,
+  CreditCard,
+  MapPin,
+  Hash,
+  ShoppingBag,
+  Home,
+} from "lucide-react";
+import { useLocation } from "react-router-dom";
+
+const ThankyouPage = () => {
+  const location = useLocation();
+  const order = location.state?.order; // ✅ get order from navigation state
+  console.log(order);
+
+  console.log(order)
+  return (
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-green-50 via-teal-50 to-emerald-50 px-4 py-12 pt-24">
+      {/* Main Card */}
+      <div className="bg-white rounded-3xl shadow-2xl p-6 md:p-10 max-w-2xl w-full relative overflow-hidden">
+        {/* Decorative Blur Circles */}
+        <div className="absolute top-0 right-0 w-32 h-32 bg-green-100 rounded-full blur-2xl opacity-50"></div>
+        <div className="absolute bottom-0 left-0 w-24 h-24 bg-emerald-100 rounded-full blur-2xl opacity-50"></div>
+
+        <div className="relative z-1 text-center">
+          {/* Success Animation */}
           <div className="flex justify-center mb-6">
             <div className="relative">
-              <div className="absolute inset-0 bg-green-400 rounded-full animate-ping opacity-25"></div>
-              <div className="relative bg-gradient-to-br from-green-400 to-emerald-500 rounded-full p-4 shadow-xl">
-                <CheckCircle className="text-white w-16 h-16 md:w-20 md:h-20" strokeWidth={2.5} />
+              <div className="absolute inset-0 bg-green-400 rounded-full animate-ping opacity-20"></div>
+              <div className="relative bg-gradient-to-br from-green-400 to-emerald-500 rounded-full p-3 shadow-lg">
+                <CheckCircle
+                  className="text-white w-14 h-14 md:w-16 md:h-16"
+                  strokeWidth={2.5}
+                />
               </div>
             </div>
           </div>
 
-          {/* Heading */}
-          <h1 className="text-3xl md:text-4xl font-bold mb-3 text-gray-800 text-center"> 
-            Order Placed Successfully! 
-          </h1> 
-          <p className="text-gray-600 mb-8 text-center text-lg"> 
-            🎉 Thank you for shopping with us! Your order is confirmed and will be delivered soon.
-          </p> 
-   
-          {/* Order Details Card */}
-          {order && ( 
-            <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-6 mb-8 border-2 border-gray-200 shadow-md">
-              <div className="flex items-center gap-2 mb-5 pb-3 border-b border-gray-300">
-                <Package className="w-6 h-6 text-emerald-600" />
-                <h2 className="text-xl font-bold text-gray-800">Order Details</h2>
+          {/* Headings */}
+          <h1 className="text-2xl md:text-3xl font-semibold mb-2 text-gray-800">
+            ✅ Order Placed Successfully!
+          </h1>
+          <p className="text-gray-600 mb-6 text-sm md:text-base">
+            Thank you for shopping with us! Your order is confirmed and will be
+            delivered soon.
+          </p>
+
+          {/* Order Info */}
+          {order && (
+            <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-5 mb-6 border border-gray-200 shadow-sm text-left">
+              <div className="flex items-center gap-2 mb-4 border-b border-gray-300 pb-2">
+                <Package className="w-5 h-5 text-emerald-600" />
+                <h2 className="text-lg font-semibold text-gray-800">
+                  Order Details
+                </h2>
               </div>
-              
-              <div className="space-y-4">
+
+              <div className="space-y-3 text-sm md:text-base">
                 {/* Order ID */}
-                <div className="flex items-start gap-3 bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-                  <div className="bg-emerald-100 p-2 rounded-lg">
-                    <Hash className="w-5 h-5 text-emerald-600" />
+                <div className="flex items-start gap-3 bg-white p-3 rounded-lg shadow-sm hover:shadow transition-all">
+                  <div className="bg-emerald-100 p-2 rounded-md">
+                    <Hash className="w-4 h-4 text-emerald-600" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm text-gray-500 font-medium mb-1">Order ID</p>
-                    <p className="text-gray-800 font-mono text-sm md:text-base break-all bg-gray-50 px-3 py-2 rounded-lg border border-gray-200">
+                    <p className="text-gray-500 font-medium mb-1">Order ID</p>
+                    <p className="text-gray-800 font-mono text-sm bg-gray-50 px-3 py-1.5 rounded-lg border border-gray-200">
                       {order._id}
                     </p>
                   </div>
                 </div>
 
-                {/* Total Amount */}
-                <div className="flex items-start gap-3 bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-                  <div className="bg-green-100 p-2 rounded-lg">
-                    <CreditCard className="w-5 h-5 text-green-600" />
+                {/* Total */}
+                <div className="flex items-start gap-3 bg-white p-3 rounded-lg shadow-sm hover:shadow transition-all">
+                  <div className="bg-green-100 p-2 rounded-md">
+                    <CreditCard className="w-4 h-4 text-green-600" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm text-gray-500 font-medium mb-1">Total Amount</p>
-                    <p className="text-2xl font-bold text-green-600">
+                    <p className="text-gray-500 font-medium mb-1">
+                      Total Amount
+                    </p>
+                    <p className="text-xl font-bold text-green-600">
                       ₹{order.totalAmount}
                     </p>
                   </div>
                 </div>
 
-                {/* Payment Method */}
-                <div className="flex items-start gap-3 bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-                  <div className="bg-blue-100 p-2 rounded-lg">
-                    <ShoppingBag className="w-5 h-5 text-blue-600" />
+                {/* Payment */}
+                <div className="flex items-start gap-3 bg-white p-3 rounded-lg shadow-sm hover:shadow transition-all">
+                  <div className="bg-blue-100 p-2 rounded-md">
+                    <ShoppingBag className="w-4 h-4 text-blue-600" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm text-gray-500 font-medium mb-1">Payment Method</p>
+                    <p className="text-gray-500 font-medium mb-1">
+                      Payment Method
+                    </p>
                     <p className="text-gray-800 font-semibold capitalize">
-                      {order.paymentMethod === 'cod' ? '💵 Cash on Delivery' : '💳 Online Payment'}
+                      {order.paymentMethod === "cod"
+                        ? "💵 Cash on Delivery"
+                        : "💳 Online Payment"}
                     </p>
                   </div>
                 </div>
 
-                {/* Shipping Address */}
-                <div className="flex items-start gap-3 bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow">
-                  <div className="bg-orange-100 p-2 rounded-lg">
-                    <MapPin className="w-5 h-5 text-orange-600" />
+                {/* Address */}
+                <div className="flex items-start gap-3 bg-white p-3 rounded-lg shadow-sm hover:shadow transition-all">
+                  <div className="bg-orange-100 p-2 rounded-md">
+                    <MapPin className="w-4 h-4 text-orange-600" />
                   </div>
                   <div className="flex-1">
-                    <p className="text-sm text-gray-500 font-medium mb-1">Delivery Address</p>
-                    <p className="text-gray-800 leading-relaxed">
-                      {order.shippingAddress.street},<br />
-                      {order.shippingAddress.city}, {order.shippingAddress.state}<br />
-                      <span className="font-semibold">PIN: {order.shippingAddress.zip}</span>
+                    <p className="text-gray-500 font-medium mb-1">
+                      Delivery Address
+                    </p>
+                    <p className="text-gray-800 text-sm leading-relaxed">
+                      {order.shippingAddress.street}, <br />
+                      {order.shippingAddress.city}, {order.shippingAddress.state}{" "}
+                      <br />
+                      <span className="font-semibold">
+                        PIN: {order.shippingAddress.zip}
+                      </span>
                     </p>
                   </div>
                 </div>
               </div>
-            </div> 
-          )} 
+            </div>
+          )}
 
-          {/* Email Confirmation Notice */}
-          <div className="bg-blue-50 border-2 border-blue-200 rounded-xl p-4 mb-8 text-center">
-            <p className="text-blue-800 text-sm font-medium">
-              📧 Order confirmation has been sent to your email
+          {/* Email Info */}
+          <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 mb-6">
+            <p className="text-blue-700 text-xs md:text-sm font-medium">
+              📧 A confirmation email has been sent to your registered address.
             </p>
           </div>
-   
-          {/* Action Buttons */}
-          <div className="flex flex-col sm:flex-row gap-4">
-            <a 
-              href="/" 
-              className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 text-center" 
-            > 
+
+          {/* Buttons */}
+          <div className="flex flex-col sm:flex-row gap-3">
+            <a
+              href="/shop"
+              className="flex-1 flex items-center justify-center gap-2 px-5 py-3 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-transform hover:-translate-y-0.5"
+            >
               <Home className="w-5 h-5" />
-              <span>Continue Shopping</span>
+              Continue Shopping
             </a>
 
-            <a 
-              href="/orders" 
-              className="flex-1 flex items-center justify-center gap-2 px-6 py-4 bg-gray-800 hover:bg-gray-900 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 text-center" 
-            > 
+            <a
+              href="/account/orders"
+              className="flex-1 flex items-center justify-center gap-2 px-5 py-3 bg-gray-800 hover:bg-gray-900 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-transform hover:-translate-y-0.5"
+            >
               <Package className="w-5 h-5" />
-              <span>View Orders</span>
+              View Orders
             </a>
           </div>
 
-          {/* Support Text */}
-          <p className="text-center text-gray-500 text-sm mt-6">
+          <p className="text-center text-gray-500 text-xs mt-5">
             Need help? Contact our support team anytime 💬
           </p>
         </div>
-      </div> 
-    </div> 
-  ); 
-}; 
- 
+      </div>
+    </div>
+  );
+};
+
 export default ThankyouPage;
