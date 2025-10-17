@@ -7,10 +7,10 @@ export default function AboutPage() {
       <section className="bg-gradient-to-r from-orange-50 via-white to-green-50 py-12">
         <div className="max-w-5xl mx-auto text-center px-4">
           <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-            About <span className="text-orange-600">Swadeshi Mall</span>
+            About <span className="text-orange-600">Indiantra</span>
           </h1>
           <p className="text-sm md:text-base text-gray-700 leading-relaxed max-w-3xl mx-auto">
-            Swadeshi Mall is a leading online store offering a wide range of{" "}
+            Indiantra is a leading online store offering a wide range of{" "}
             <span className="font-semibold text-orange-600">Swadeshi Products</span> made in India.  
             Our mission is to empower local manufacturers and promote indigenous products globally.
           </p>
@@ -27,7 +27,7 @@ export default function AboutPage() {
             showcase their craftsmanship.  
             We encourage everyone to{" "}
             <span className="font-medium text-green-700">
-              sell their products on Swadeshi Mall
+              sell their products on Indiantra
             </span> and contribute to this movement.
           </p>
         </div>
@@ -47,10 +47,10 @@ export default function AboutPage() {
       <section className="bg-white py-12">
         <div className="max-w-6xl mx-auto px-4 space-y-8">
           <h2 className="text-2xl md:text-3xl font-bold text-orange-600 text-center">
-            Swadeshi e-commerce
+            Indiantra e-commerce
           </h2>
           <p className="text-gray-700 text-sm md:text-base leading-relaxed">
-            At Swadeshi e-commerce, we believe that every product carries a story—a story of hands that create, communities that nurture, and traditions that live on. Our platform was born with a simple yet powerful vision: to promote Swadeshi values by connecting India’s rural artisans, women entrepreneurs, and local industries directly with customers across the country and beyond.
+            At Indiantra e-commerce, we believe that every product carries a story—a story of hands that create, communities that nurture, and traditions that live on. Our platform was born with a simple yet powerful vision: to promote Swadeshi values by connecting India’s rural artisans, women entrepreneurs, and local industries directly with customers across the country and beyond.
           </p>
 
           <h3 className="text-xl font-bold text-green-700">The Heart of Our Mission</h3>
@@ -76,7 +76,7 @@ export default function AboutPage() {
 
           <h3 className="text-xl font-bold text-green-700">Our Promise to You</h3>
           <p className="text-gray-700 text-sm md:text-base leading-relaxed">
-            When you shop with Swadeshi e-commerce, you are not just making a purchase—you are becoming a part of a movement. A movement that supports women, strengthens local industries, encourages sustainable living, and celebrates the spirit of Swadeshi Bharat.
+            When you shop with Indiantra e-commerce, you are not just making a purchase—you are becoming a part of a movement. A movement that supports women, strengthens local industries, encourages sustainable living, and celebrates the spirit of Swadeshi Bharat.
           </p>
           <p className="text-gray-700 text-sm md:text-base leading-relaxed font-semibold">
             Together, let us build a marketplace that values people as much as products, and traditions as much as trends. Choose Swadeshi. Support women. Celebrate Handmade.
@@ -96,7 +96,7 @@ export default function AboutPage() {
             <div className="bg-white border border-orange-200 rounded-2xl shadow-md p-6 relative hover:shadow-xl transition duration-300">
               <FaQuoteLeft className="text-orange-400 text-2xl absolute top-4 left-4 opacity-50" />
               <p className="italic text-gray-700 mb-4 leading-relaxed text-left text-sm">
-                I have bought many Swadeshi products online from Swadeshi Mall and I’m really
+                I have bought many Swadeshi products online from Indiantra and I’m really
                 satisfied with the quality. This is a genuine site that I recommend
                 to everyone who wants to buy Made in India products.
               </p>
@@ -110,7 +110,7 @@ export default function AboutPage() {
             <div className="bg-white border border-orange-200 rounded-2xl shadow-md p-6 relative hover:shadow-xl transition duration-300">
               <FaQuoteLeft className="text-orange-400 text-2xl absolute top-4 left-4 opacity-50" />
               <p className="italic text-gray-700 mb-4 leading-relaxed text-left text-sm">
-                I am a homemade products manufacturer and sell many items on Swadeshi Mall.  
+                I am a homemade products manufacturer and sell many items on Indiantra.  
                 My business has grown significantly and I can now earn a good income 
                 selling my products online across India.
               </p>

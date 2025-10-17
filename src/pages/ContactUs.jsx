@@ -56,10 +56,10 @@ const ContactUs = () => {
                 Send us an email anytime!
               </p>
               <a
-                href="mailto:support@dealzone.com"
+                href="mailto:info@indiantra.com"
                 className="text-orange-600 font-semibold text-sm hover:text-orange-700 transition-colors"
               >
-                support@dealzone.com
+                info@indiantra.com
               </a>
             </div>
 
@@ -73,10 +73,10 @@ const ContactUs = () => {
                 Mon-Fri from 8am to 5pm
               </p>
               <a
-                href="tel:+911234567890"
+                href="tel:+919235558887"
                 className="text-orange-600 font-semibold text-sm hover:text-orange-700 transition-colors"
               >
-                +91 123 456 7890
+                +91 92355 58887
               </a>
             </div>
 

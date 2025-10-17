@@ -51,16 +51,16 @@ const Support = () => {
       icon: Mail,
       title: "Email Support",
       description: "Get help via email",
-      contact: "support@example.com",
-      link: "mailto:support@example.com",
+      contact: "info@indiantra.com",
+      link: "mailto:info@indiantra.com",
       availability: "Response within 24 hours"
     },
     {
       icon: Phone,
       title: "Phone Support",
       description: "Talk to our team",
-      contact: "+91 98765 43210",
-      link: "tel:+919876543210",
+      contact: "+91 9235558887",
+      link: "tel:+919235558887",
       availability: "Mon-Sat, 9 AM - 8 PM"
     },
     {

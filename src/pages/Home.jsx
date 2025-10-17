@@ -10,14 +10,17 @@ import BestDeails from '../components/BestDeails'
 import Highlights from '../components/Highlights'
 import { ShopContext } from '../context/ShopContext'
 import HeroBanner from '../components/HeroBanner'
+import SwadeshiBanner from '../components/SwadeshiBanner'
 
 
 const Home = () => {
   const {products} = useContext(ShopContext);
   return (
     <div className='flex flex-col'>
+
         <CategorySection/>
         {/* <HeroBanner/> */}
+        <SwadeshiBanner/>
         <HeroSection/>
         <FeaturesBar/>
         <GamerWorld/>

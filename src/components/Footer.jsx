@@ -54,7 +54,7 @@ export default function Footer() {
           <a href="#" className="hover:text-yellow-300 transition text-lg"><FaFacebookF /></a>
           <a href="#" className="hover:text-yellow-300 transition text-lg"><FaYoutube /></a>
           <span className="ml-4 text-orange-50">
-            © 2025 <span className="font-semibold">SwadeshiEmall</span> · All rights reserved
+            © 2025 <span className="font-semibold">Indiantra</span> · All rights reserved
           </span>
         </div>
 
