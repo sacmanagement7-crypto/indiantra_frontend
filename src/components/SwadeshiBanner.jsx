@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight, Sparkles, Heart, Star } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
+import swadeshi from "../assets/swadeshi.png"
 
 export default function SwadeshiBanner() {
   return (
@@ -59,71 +60,7 @@ export default function SwadeshiBanner() {
 
             {/* Right Visual */}
             <div className="flex items-center justify-center">
-              <div className="grid grid-cols-2 gap-3">
-                {/* Fabric */}
-                <div className="group bg-white rounded-xl p-4 shadow-lg hover:shadow-xl transition-all cursor-pointer hover:-translate-y-1">
-                  <div className="relative bg-gradient-to-br from-amber-100 to-orange-100 rounded-lg h-24 flex items-center justify-center text-4xl mb-2">
-                    📦
-                    <button className="absolute top-1 right-1 bg-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm">
-                      <Heart className="w-3.5 h-3.5 text-orange-500" />
-                    </button>
-                  </div>
-                  <div className="flex items-center gap-1 mb-1">
-                    <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-                    <span className="text-xs font-semibold text-amber-900">4.8</span>
-                  </div>
-                  <p className="text-xs font-semibold text-amber-900">Handwoven Fabric</p>
-                  <p className="text-xs text-orange-600 font-bold">₹899</p>
-                </div>
-
-                {/* Spice Jar */}
-                <div className="group bg-white rounded-xl p-4 shadow-lg hover:shadow-xl transition-all cursor-pointer hover:-translate-y-1 mt-6">
-                  <div className="relative bg-gradient-to-br from-orange-100 to-amber-100 rounded-lg h-24 flex items-center justify-center text-4xl mb-2">
-                    🏺
-                    <button className="absolute top-1 right-1 bg-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm">
-                      <Heart className="w-3.5 h-3.5 text-orange-500" />
-                    </button>
-                  </div>
-                  <div className="flex items-center gap-1 mb-1">
-                    <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-                    <span className="text-xs font-semibold text-amber-900">4.9</span>
-                  </div>
-                  <p className="text-xs font-semibold text-amber-900">Organic Spices</p>
-                  <p className="text-xs text-orange-600 font-bold">₹299</p>
-                </div>
-
-                {/* Herbal Extract */}
-                <div className="group bg-white rounded-xl p-4 shadow-lg hover:shadow-xl transition-all cursor-pointer hover:-translate-y-1 -mt-3">
-                  <div className="relative bg-gradient-to-br from-amber-50 to-orange-50 rounded-lg h-24 flex items-center justify-center text-4xl mb-2">
-                    🧴
-                    <button className="absolute top-1 right-1 bg-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm">
-                      <Heart className="w-3.5 h-3.5 text-orange-500" />
-                    </button>
-                  </div>
-                  <div className="flex items-center gap-1 mb-1">
-                    <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-                    <span className="text-xs font-semibold text-amber-900">4.7</span>
-                  </div>
-                  <p className="text-xs font-semibold text-amber-900">Herbal Extract</p>
-                  <p className="text-xs text-orange-600 font-bold">₹549</p>
-                </div>
-
-                {/* Tea Pot */}
-                <div className="group bg-white rounded-xl p-4 shadow-lg hover:shadow-xl transition-all cursor-pointer hover:-translate-y-1 mt-3">
-                  <div className="relative bg-gradient-to-br from-orange-100 to-amber-200 rounded-lg h-24 flex items-center justify-center text-4xl mb-2">
-                    🫖
-                    <button className="absolute top-1 right-1 bg-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity shadow-sm">
-                      <Heart className="w-3.5 h-3.5 text-orange-500" />
-                    </button>
-                  </div>
-                  <div className="flex items-center gap-1 mb-1">
-                    <Star className="w-3 h-3 fill-amber-400 text-amber-400" />
-                    <span className="text-xs font-semibold text-amber-900">4.9</span>
-                  </div>
-                  <p className="text-xs font-semibold text-amber-900">Clay Tea Pot</p>
-                  <p className="text-xs text-orange-600 font-bold">₹699</p>
-                </div>
-              </div>
+              <img src={swadeshi} alt="" />
             </div>
           </div>
 
