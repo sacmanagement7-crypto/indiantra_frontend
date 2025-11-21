@@ -2,6 +2,7 @@ import React from 'react';
 import { ArrowRight, Sparkles, Heart, Star } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import swadeshi from "../assets/swadeshi.png"
+import swadeshi2 from "../assets/swadeshi2.png"
 
 export default function SwadeshiBanner() {
   return (
@@ -31,11 +32,11 @@ export default function SwadeshiBanner() {
                   <br />
                   <span className="text-orange-600">PRODUCT</span>
                 </h1>
-                
+
                 <NavLink to={'/shop'}>
-                    <div className="inline-block bg-gradient-to-r from-orange-500 to-amber-600 text-white px-6 py-2 rounded-lg text-base font-bold shadow-md mt-2">
-                  BUY LOCAL
-                </div>
+                  <div className="inline-block bg-gradient-to-r from-orange-500 to-amber-600 text-white px-6 py-2 rounded-lg text-base font-bold shadow-md mt-2">
+                    BUY LOCAL
+                  </div>
                 </NavLink>
               </div>
 
@@ -45,23 +46,32 @@ export default function SwadeshiBanner() {
 
               <div className="flex items-center gap-3 pt-2">
                 <NavLink to={'/shop'}>
-                    <button className="group flex items-center gap-2 bg-amber-900 text-white px-6 py-3 rounded-xl font-semibold text-sm hover:bg-amber-800 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5">
-                  Shop Now
-                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                </button>
+                  <button className="group flex items-center gap-2 bg-amber-900 text-white px-6 py-3 rounded-xl font-semibold text-sm hover:bg-amber-800 transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5">
+                    Shop Now
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </button>
                 </NavLink>
                 <NavLink to={'/about'}>
-                    <button className="flex items-center gap-2 bg-white text-amber-900 px-6 py-3 rounded-xl font-semibold text-sm hover:bg-amber-50 transition-all shadow-md border border-orange-200">
-                  Learn More
-                </button>
+                  <button className="flex items-center gap-2 bg-white text-amber-900 px-6 py-3 rounded-xl font-semibold text-sm hover:bg-amber-50 transition-all shadow-md border border-orange-200">
+                    Learn More
+                  </button>
                 </NavLink>
               </div>
             </div>
 
             {/* Right Visual */}
-            <div className="flex items-center justify-center">
-              <img src={swadeshi} alt="" />
-            </div>
+           <div className="flex items-center justify-center gap-4">
+  <img
+    src={swadeshi}
+    alt="Swadeshi Product 1"
+    className="w-1/2 h-auto rounded-lg shadow-lg object-contain"
+  />
+  <img
+    src={swadeshi2}
+    alt="Swadeshi Product 2"
+    className="w-1/2 h-auto rounded-lg shadow-lg object-contain"
+  />
+</div>
           </div>
 
           {/* Bottom Stats Bar */}
