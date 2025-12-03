@@ -60,18 +60,18 @@ export default function SwadeshiBanner() {
             </div>
 
             {/* Right Visual */}
-           <div className="flex items-center justify-center gap-4">
-  <img
-    src={swadeshi}
-    alt="Swadeshi Product 1"
-    className="w-1/2 h-auto rounded-lg shadow-lg object-contain"
-  />
-  <img
-    src={swadeshi2}
-    alt="Swadeshi Product 2"
-    className="w-1/2 h-auto rounded-lg shadow-lg object-contain"
-  />
-</div>
+            <div className="flex items-center justify-center gap-4">
+              <img
+                src={swadeshi}
+                alt="Swadeshi Product 1"
+                className="w-1/2 h-auto rounded-lg shadow-lg object-contain"
+              />
+              <img
+                src={swadeshi2}
+                alt="Swadeshi Product 2"
+                className="w-1/2 h-auto rounded-lg shadow-lg object-contain"
+              />
+            </div>
           </div>
 
           {/* Bottom Stats Bar */}
